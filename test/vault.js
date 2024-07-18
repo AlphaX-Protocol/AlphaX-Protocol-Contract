@@ -13,7 +13,7 @@ const createSignature = async (
   expireTime,
   requestID,
   vaultAddress,
-  isEth,
+  isEth
 ) => {
   let encodeString;
   let payload;
@@ -39,7 +39,7 @@ const createSignature = async (
         "uint256",
         "address",
       ],
-      encodeString,
+      encodeString
     );
   } else {
     encodeString = [
@@ -63,7 +63,7 @@ const createSignature = async (
         "uint256",
         "address",
       ],
-      encodeString,
+      encodeString
     );
   }
 
@@ -86,7 +86,7 @@ describe("Vault", function () {
     const token = await ethers.deployContract(
       "SimpleToken",
       ["Test Token", "USDTM", 6, 1000000000],
-      deployer,
+      deployer
     );
 
     await token.waitForDeployment();
@@ -106,7 +106,7 @@ describe("Vault", function () {
         200000 * 1000000, //20000 USDT
         BigInt(10) * BigInt("1000000000000000000"), //10 ether
       ],
-      { initializer: "initialize", kind: "uups" },
+      { initializer: "initialize", kind: "uups" }
     );
 
     await proxy.waitForDeployment();
@@ -114,7 +114,7 @@ describe("Vault", function () {
 
     const receipt = await proxy.deployTransaction;
     let implementationAddress = await upgrades.erc1967.getImplementationAddress(
-      proxy.target,
+      proxy.target
     );
     // console.log(
     //   " getImplementationAddress",
@@ -149,16 +149,16 @@ describe("Vault", function () {
       // console.log("logs--", txreceipt.logs);
 
       expect(txreceipt.logs[1].topics[0]).to.equal(
-        "0x7cfff908a4b583f36430b25d75964c458d8ede8a99bd61be750e97ee1b2f3a96",
+        "0x7cfff908a4b583f36430b25d75964c458d8ede8a99bd61be750e97ee1b2f3a96"
       );
       expect(txreceipt.logs[1].topics[1]).to.equal(
-        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[1].topics[2]).to.equal(
-        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[1].topics[3]).to.equal(
-        "0x000000000000000000000000" + token.target.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + token.target.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[1].data).to.equal(100000000n);
     });
@@ -179,16 +179,16 @@ describe("Vault", function () {
 
       // ("events", txreceipt.logs);
       expect(txreceipt.logs[0].topics[0]).to.equal(
-        "0x7cfff908a4b583f36430b25d75964c458d8ede8a99bd61be750e97ee1b2f3a96",
+        "0x7cfff908a4b583f36430b25d75964c458d8ede8a99bd61be750e97ee1b2f3a96"
       );
       expect(txreceipt.logs[0].topics[1]).to.equal(
-        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[0].topics[2]).to.equal(
-        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[0].topics[3]).to.equal(
-        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
       );
       expect(txreceipt.logs[0].data).to.equal(1000000000000000000n);
     });
@@ -210,16 +210,16 @@ describe("Vault", function () {
 
       // ("events", txreceipt.logs);
       expect(txreceipt.logs[0].topics[0]).to.equal(
-        "0x7cfff908a4b583f36430b25d75964c458d8ede8a99bd61be750e97ee1b2f3a96",
+        "0x7cfff908a4b583f36430b25d75964c458d8ede8a99bd61be750e97ee1b2f3a96"
       );
       expect(txreceipt.logs[0].topics[1]).to.equal(
-        "0x000000000000000000000000" + signer1.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + signer1.address.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[0].topics[2]).to.equal(
-        "0x000000000000000000000000" + signer1.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + signer1.address.slice(2).toLowerCase()
       );
       expect(txreceipt.logs[0].topics[3]).to.equal(
-        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
       );
       expect(txreceipt.logs[0].data).to.equal(1000000000000000000n);
     });
@@ -257,7 +257,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
       let sig1 = createSignature(
         signer1,
@@ -267,7 +267,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
 
       let result1 = await proxy
@@ -279,7 +279,7 @@ describe("Vault", function () {
           time + 3600 * 24,
           requestID,
           [deployer.address, signer1.address],
-          [sig0, sig1],
+          [sig0, sig1]
         );
 
       let txreceipt1 = await result1.wait();
@@ -287,16 +287,16 @@ describe("Vault", function () {
       //("events", txreceipt1.logs);
 
       expect(txreceipt1.logs[1].topics[0]).to.equal(
-        "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db",
+        "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db"
       );
       expect(txreceipt1.logs[1].topics[1]).to.equal(
-        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
       );
       expect(txreceipt1.logs[1].topics[2]).to.equal(
-        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
       );
       expect(txreceipt1.logs[1].topics[3]).to.equal(
-        "0x000000000000000000000000" + token.target.slice(2).toLowerCase(),
+        "0x000000000000000000000000" + token.target.slice(2).toLowerCase()
       );
 
       //("args:", txreceipt.logs[1].args);
@@ -330,7 +330,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        1,
+        1
       );
       let sig1 = createSignature(
         signer1,
@@ -340,7 +340,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        1,
+        1
       );
 
       let result1 = await proxy
@@ -351,7 +351,7 @@ describe("Vault", function () {
           time + 3600 * 24,
           requestID,
           [deployer.address, signer1.address],
-          [sig0, sig1],
+          [sig0, sig1]
         );
 
       let txreceipt1 = await result1.wait();
@@ -360,7 +360,7 @@ describe("Vault", function () {
       let args = txreceipt1.logs[0].args;
 
       expect(txreceipt1.logs[0].topics[0]).to.equal(
-        "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db",
+        "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db"
       );
       expect(args[0]).to.equal(deployer.address);
       expect(args[1]).to.equal(deployer.address);
@@ -395,7 +395,7 @@ describe("Vault", function () {
       await expect(
         proxy
           .connect(deployer)
-          .changeSigners([signer1.address, signer2.address, signer3.address]),
+          .changeSigners([signer1.address, signer2.address, signer3.address])
       ).to.emit(proxy, "SignersUpdate");
 
       let time = Date.now();
@@ -410,7 +410,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
       let sig1 = createSignature(
         signer1,
@@ -420,7 +420,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
 
       await expect(
@@ -433,8 +433,8 @@ describe("Vault", function () {
             time + 3600 * 24,
             requestID,
             [deployer.address, signer1.address],
-            [sig0, sig1],
-          ),
+            [sig0, sig1]
+          )
       ).to.be.revertedWith("not allowed signer");
 
       expect(await proxy.isAllowedSigner(deployer.address)).to.equal(false);
@@ -451,7 +451,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
 
       await expect(
@@ -464,8 +464,8 @@ describe("Vault", function () {
             time + 3600 * 24,
             requestID,
             [signer3.address, signer1.address],
-            [sig0, sig1],
-          ),
+            [sig0, sig1]
+          )
       ).to.emit(proxy, "Withdraw");
 
       await expect(
@@ -478,8 +478,8 @@ describe("Vault", function () {
             time + 3600 * 24,
             requestID,
             [signer3.address, signer1.address],
-            [sig0, sig1],
-          ),
+            [sig0, sig1]
+          )
       ).to.be.revertedWith("repeated request");
     });
   });
@@ -523,8 +523,8 @@ describe("Vault", function () {
           .withdrawERC20TokenByOwner(
             tokenAddress,
             signer1.address,
-            300 * 1000000,
-          ),
+            300 * 1000000
+          )
       ).to.be.reverted;
 
       // withdraw by owner, but excessed balance
@@ -534,8 +534,8 @@ describe("Vault", function () {
           .withdrawERC20TokenByOwner(
             tokenAddress,
             signer1.address,
-            400 * 1000000,
-          ),
+            400 * 1000000
+          )
       ).to.be.revertedWith("NOT_ENOUGH_BALANCE");
 
       // withdraw by owner, success
@@ -545,8 +545,8 @@ describe("Vault", function () {
           .withdrawERC20TokenByOwner(
             tokenAddress,
             signer1.address,
-            300 * 1000000,
-          ),
+            300 * 1000000
+          )
       ).to.emit(token, "Transfer");
 
       expect(await token.balanceOf(proxy.target)).to.equal(0);
@@ -574,14 +574,14 @@ describe("Vault", function () {
       await expect(
         proxy
           .connect(signer1)
-          .withdrawETHByOwner(signer1.address, BigInt(3) * ETH),
+          .withdrawETHByOwner(signer1.address, BigInt(3) * ETH)
       ).to.be.reverted;
 
       // withdraw by owner, but excessed balance
       await expect(
         proxy
           .connect(deployer)
-          .withdrawETHByOwner(signer1.address, BigInt(4) * ETH),
+          .withdrawETHByOwner(signer1.address, BigInt(4) * ETH)
       ).to.be.revertedWith("NOT_ENOUGH_BALANCE");
 
       expect(await provider.getBalance(proxy.target)).to.equal(BigInt(3) * ETH);
@@ -590,7 +590,7 @@ describe("Vault", function () {
       await expect(
         proxy
           .connect(deployer)
-          .withdrawETHByOwner(signer1.address, BigInt(3) * ETH),
+          .withdrawETHByOwner(signer1.address, BigInt(3) * ETH)
       );
 
       expect(await token.balanceOf(proxy.target)).to.equal(0);
@@ -617,7 +617,7 @@ describe("Vault", function () {
       await expect(
         proxy
           .connect(signer1)
-          .depositERC20(token.target, 100 * 1000000, signer1.address),
+          .depositERC20(token.target, 100 * 1000000, signer1.address)
       ).to.be.reverted;
 
       expect(await token.balanceOf(proxy.target)).to.equal(100 * 1000000);
@@ -634,7 +634,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
       let sig1 = createSignature(
         signer1,
@@ -644,7 +644,7 @@ describe("Vault", function () {
         time + 3600 * 24,
         requestID,
         vaultAddress,
-        0,
+        0
       );
 
       await expect(
@@ -657,8 +657,8 @@ describe("Vault", function () {
             time + 3600 * 24,
             requestID,
             [deployer.address, signer1.address],
-            [sig0, sig1],
-          ),
+            [sig0, sig1]
+          )
       ).to.be.reverted;
 
       expect(await token.balanceOf(proxy.target)).to.equal(100 * 1000000);
@@ -674,7 +674,7 @@ describe("Vault", function () {
           time + 3600 * 24,
           requestID,
           [deployer.address, signer1.address],
-          [sig0, sig1],
+          [sig0, sig1]
         );
 
       //("args:", txreceipt.logs[1].args);
@@ -689,7 +689,7 @@ describe("Vault", function () {
       const tokenNew = await ethers.deployContract(
         "SimpleToken",
         ["Test Token 1", "USDTM1", 6, 1000000000],
-        deployer,
+        deployer
       );
 
       await tokenNew.waitForDeployment();
@@ -699,7 +699,7 @@ describe("Vault", function () {
       await expect(
         proxy
           .connect(deployer)
-          .depositERC20(tokenNew.target, 100 * 1000000, deployer.address),
+          .depositERC20(tokenNew.target, 100 * 1000000, deployer.address)
       ).to.be.revertedWith("Token not allowed");
     });
     it(" owner set token as whitelist", async function () {
@@ -709,7 +709,7 @@ describe("Vault", function () {
       const tokenNew = await ethers.deployContract(
         "SimpleToken",
         ["Test Token 1", "USDTM1", 6, 1000000000],
-        deployer,
+        deployer
       );
 
       await tokenNew.waitForDeployment();
@@ -721,17 +721,17 @@ describe("Vault", function () {
       await expect(
         proxy
           .connect(deployer)
-          .depositERC20(tokenNew.target, 100 * 1000000, deployer.address),
+          .depositERC20(tokenNew.target, 100 * 1000000, deployer.address)
       ).to.be.revertedWith("Token not allowed");
 
       await expect(
-        proxy.setWithdrawLimit(tokenNew.target, 1000000 * 1000000),
+        proxy.setWithdrawLimit(tokenNew.target, 1000000 * 1000000)
       ).to.emit(proxy, "WithdrawLimitUpdate");
 
       await expect(
         proxy
           .connect(deployer)
-          .depositERC20(tokenNew.target, 100 * 1000000, deployer.address),
+          .depositERC20(tokenNew.target, 100 * 1000000, deployer.address)
       ).to.emit(proxy, "Deposit");
     });
 
@@ -765,17 +765,15 @@ describe("Vault", function () {
           "uint256",
           "address",
         ],
-        encodeString,
+        encodeString
       );
-
-      console.log("payload: ", payload);
 
       const payloadHash = ethers.keccak256(payload);
 
       let ethaddr = "0x0000000000000000000000000000000000000000";
 
       expect(
-        await proxy.calcSigHash(to, amount, ethaddr, expireTime, requestID),
+        await proxy.calcSigHash(to, amount, ethaddr, expireTime, requestID)
       ).to.equal(payloadHash);
     });
 
@@ -810,19 +808,13 @@ describe("Vault", function () {
           "uint256",
           "address",
         ],
-        encodeString,
+        encodeString
       );
 
       const payloadHash = ethers.keccak256(payload);
 
       expect(
-        await proxy.calcSigHash(
-          to,
-          amount,
-          token.target,
-          expireTime,
-          requestID,
-        ),
+        await proxy.calcSigHash(to, amount, token.target, expireTime, requestID)
       ).to.equal(payloadHash);
     });
   });
@@ -845,12 +837,12 @@ describe("Vault", function () {
       let proxy1 = await upgrades.upgradeProxy(proxy.target, vault2);
 
       expect(await proxy1.getTokenWithdrawLimit(token.target)).to.equal(
-        `200000000000`,
+        `200000000000`
       );
       expect(proxy1.target).to.equal(proxy.target);
 
       expect(
-        await upgrades.erc1967.getImplementationAddress(proxy.target),
+        await upgrades.erc1967.getImplementationAddress(proxy.target)
       ).to.not.equal(implementationAddress);
     });
   });
