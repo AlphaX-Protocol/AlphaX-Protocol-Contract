@@ -1,4 +1,4 @@
-# ALPHAX-PROTOCOL
+# ALPHAX-PROTOCOL-Contract
 
 ```shell
 
