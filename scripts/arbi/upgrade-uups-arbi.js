@@ -11,7 +11,7 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const vault2 = await ethers.getContractFactory("DEXVaultMock");
+  const vault2 = await ethers.getContractFactory("DEXVaultV1");
 
   let vaultAddress = "0x552E7A55802f3350C707a243E402aa50Eda9D286";
   let tokenAddress = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";

@@ -457,4 +457,16 @@ contract DEXVault is
         }
         return operationHash;
     }
+
+    function getTokenWithdrawLimit(
+        address token
+    ) public view returns (uint256) {
+        return tokenWithdrawLimit[token];
+    }
+
+    function getRequestInfo(
+        uint256 requestId
+    ) public view returns (request memory) {
+        return requests[requestId];
+    }
 }
