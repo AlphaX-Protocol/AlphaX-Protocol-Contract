@@ -13,11 +13,11 @@ contract DEXVaultMock is DEXVault {
     ) public view returns (uint256) {
         return tokenWithdrawLimit[token];
     }
+    
 
-    function depositERC20WithSwapData(
-        IERC20 token,
-        uint256 amount,
-        address receiver,
-        bytes calldata exchangeData
-    ) public tokenWhitelist(address(token)) whenNotPaused nonReentrant {}
+    function getRequestInfo(uint256 requestId) public view returns (request memory) {
+        return requests[requestId];
+    }
+
+ 
 }

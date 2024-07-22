@@ -13,8 +13,8 @@ async function main() {
 
   const vault2 = await ethers.getContractFactory("DEXVaultMock");
 
-  let vaultAddress = "0x640A691bB8422C6e0252C9d4b3f6f09Df217434D";
-  let tokenAddress = "0x0668f9B182a5977781d73cD416eF985145B9Cd80";
+  let vaultAddress = "0x552E7A55802f3350C707a243E402aa50Eda9D286";
+  let tokenAddress = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
 
   let proxy = await upgrades.upgradeProxy(vaultAddress, vault2);
 
