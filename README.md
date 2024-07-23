@@ -1,5 +1,7 @@
 # ALPHAX-PROTOCOL-Contract
 
+The main function of the DEXVault to serve as a secure vault for depositing and withdrawing cryptocurrencies, both Ether (ETH) and ERC-20 tokens, with enhanced security features like multi-signature authorization and withdrawal limits. Accounting information are handled off-chain.
+
 ```shell
 
 npx hardhat compile
