@@ -22,6 +22,7 @@ npx hardhat run scripts/deploy-uups.js --network sepolia
 ```
 
 ```
- Proxy contract 0x640A691bB8422C6e0252C9d4b3f6f09Df217434D
- getImplementationAddress 0xB4a3AefE93B004362080Cc702f568b6fc89b6cFA
+Arbi:
+ Proxy contract 0x552E7A55802f3350C707a243E402aa50Eda9D286
+ getImplementationAddress 0xa61a6e696b7c566da42b80da27d96e7104bcec99
 ```
