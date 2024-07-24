@@ -832,7 +832,7 @@ describe("Vault", function () {
 
       // expect(await proxy.getTokenWithdrawLimit(token.target)).to.be.reverted;
 
-      const vault2 = await ethers.getContractFactory("DEXVaultMock");
+      const vault2 = await ethers.getContractFactory("DEXVaultV1");
 
       let proxy1 = await upgrades.upgradeProxy(proxy.target, vault2);
 
