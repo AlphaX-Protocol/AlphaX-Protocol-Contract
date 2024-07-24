@@ -14,7 +14,7 @@ async function main() {
   const vault2 = await ethers.getContractFactory("DEXVaultV1");
 
   let vaultAddress = "0x552E7A55802f3350C707a243E402aa50Eda9D286";
-  let tokenAddress = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
+  let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
 
   let proxy = await upgrades.upgradeProxy(vaultAddress, vault2);
 }
