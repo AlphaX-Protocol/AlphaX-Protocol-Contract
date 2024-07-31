@@ -226,6 +226,64 @@ describe("Vault", function () {
   });
 
   describe("Withdrawals", function () {
+    it("Test deposit 100  USDT and  withdraw 100 USDT, expire ", async function () {
+      const { lock } = await loadFixture(deployFixture);
+
+      const { token, proxy, deployer, signer1, signer2 } =
+        await loadFixture(deployFixture);
+
+      let tokenAddress = token.target;
+      let vaultAddress = proxy.target;
+
+      await token.connect(deployer).approve(proxy.target, 1000000 * 10000000);
+
+      let result = await proxy
+        .connect(deployer)
+        .depositERC20(token.target, 100 * 1000000, deployer.address);
+
+      let txreceipt = await result.wait();
+
+      expect(await token.balanceOf(proxy.target)).to.equal(100 * 1000000);
+
+      let time = Math.round(Date.now() / 1000);
+
+      let requestID = 100;
+
+      let sig0 = createSignature(
+        deployer,
+        deployer.address,
+        100000000,
+        tokenAddress,
+        time,
+        requestID,
+        vaultAddress,
+        0
+      );
+      let sig1 = createSignature(
+        signer1,
+        deployer.address,
+        100000000,
+        tokenAddress,
+        time,
+        requestID,
+        vaultAddress,
+        0
+      );
+
+      await expect(
+        proxy
+          .connect(deployer)
+          .withdrawERC20(
+            deployer.address,
+            100000000,
+            tokenAddress,
+            time,
+            requestID,
+            [deployer.address, signer1.address],
+            [sig0, sig1]
+          )
+      ).to.be.revertedWith("expired transaction");
+    });
     it("Test deposit 100  USDT and  withdraw 100 USDT", async function () {
       const { lock } = await loadFixture(deployFixture);
 
@@ -245,7 +303,7 @@ describe("Vault", function () {
 
       expect(await token.balanceOf(proxy.target)).to.equal(100 * 1000000);
 
-      let time = Date.now();
+      let time = Math.round(Date.now() / 1000);
 
       let requestID = 100;
 
@@ -318,7 +376,7 @@ describe("Vault", function () {
 
       expect(await provider.getBalance(proxy.target)).to.equal(ETH);
 
-      let time = Date.now();
+      let time = Math.round(Date.now() / 1000);
 
       let requestID = 100;
 
@@ -398,7 +456,7 @@ describe("Vault", function () {
           .changeSigners([signer1.address, signer2.address, signer3.address])
       ).to.emit(proxy, "SignersUpdate");
 
-      let time = Date.now();
+      let time = Math.round(Date.now() / 1000);
 
       let requestID = 100;
 
@@ -622,7 +680,7 @@ describe("Vault", function () {
 
       expect(await token.balanceOf(proxy.target)).to.equal(100 * 1000000);
 
-      let time = Date.now();
+      let time = Math.round(Date.now() / 1000) + 3600 * 24;
 
       let requestID = 100;
 
@@ -783,7 +841,7 @@ describe("Vault", function () {
 
       let to = deployer.address;
       let amount = 100000000;
-      let expireTime = Date.now() + 3600 * 24;
+      let expireTime = Math.round(Date.now() / 1000) + 3600 * 24;
       let requestID = 100;
       let vaultAddress = proxy.target;
 
