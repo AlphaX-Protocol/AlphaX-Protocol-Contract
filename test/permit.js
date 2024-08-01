@@ -5,6 +5,72 @@ const {
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
 
+const createSignature = async (
+  wallet,
+  to,
+  amount,
+  token,
+  expireTime,
+  requestID,
+  vaultAddress,
+  isEth
+) => {
+  let encodeString;
+  let payload;
+
+  if (isEth) {
+    encodeString = [
+      "ETHER",
+      31337,
+      to,
+      amount,
+      expireTime,
+      requestID,
+      vaultAddress,
+    ];
+
+    payload = ethers.solidityPacked(
+      [
+        "string",
+        "uint256",
+        "address",
+        "uint256",
+        "uint256",
+        "uint256",
+        "address",
+      ],
+      encodeString
+    );
+  } else {
+    encodeString = [
+      "ERC20",
+      31337,
+      to,
+      amount,
+      token,
+      expireTime,
+      requestID,
+      vaultAddress,
+    ];
+    payload = ethers.solidityPacked(
+      [
+        "string",
+        "uint256",
+        "address",
+        "uint256",
+        "address",
+        "uint256",
+        "uint256",
+        "address",
+      ],
+      encodeString
+    );
+  }
+
+  const payloadHash = ethers.keccak256(payload);
+  return wallet.signMessage(ethers.getBytes(payloadHash));
+};
+
 describe("Vault with permit", function () {
   const ETH = BigInt("1000000000000000000");
   const provider = ethers.provider;
@@ -205,6 +271,144 @@ describe("Vault with permit", function () {
           );
 
         expect(await token.balanceOf(proxy1.target)).to.be.equal(1000000);
+      });
+    });
+
+    describe("uups upgrade ,  deposit with permit, withdraw ", function () {
+      it(" withdraw with dailylimit", async function () {
+        const {
+          token,
+          proxy,
+          deployer,
+          signer1,
+          signer2,
+          implementationAddress,
+        } = await loadFixture(deployFixture);
+
+        // expect(await proxy.getTokenWithdrawLimit(token.target)).to.be.reverted;
+
+        const vault2 = await ethers.getContractFactory("DEXVaultV1");
+
+        let proxy1 = await upgrades.upgradeProxy(proxy.target, vault2);
+
+        expect(proxy1.target).to.equal(proxy.target);
+
+        expect(
+          await upgrades.erc1967.getImplementationAddress(proxy.target)
+        ).to.not.equal(implementationAddress);
+
+        const data = {
+          types: {
+            Permit: [
+              { name: "owner", type: "address" },
+              { name: "spender", type: "address" },
+              { name: "value", type: "uint256" },
+              { name: "nonce", type: "uint256" },
+              { name: "deadline", type: "uint256" },
+            ],
+          },
+          domain: {
+            name: "Test Token Permit",
+            version: "1",
+            chainId: "31337",
+            verifyingContract: token.target,
+          },
+          primaryType: "Permit",
+          message: {
+            owner: deployer.address,
+            spender: proxy.target,
+            value: 100000000,
+            nonce: 0,
+            deadline: Math.round(Date.now() / 1000) + 1000 * 60 * 60,
+          },
+        };
+
+        const signature = await deployer.signTypedData(
+          data.domain,
+          data.types,
+          data.message
+        );
+
+        const v = "0x" + signature.slice(130, 132);
+        const r = signature.slice(0, 66);
+        const s = "0x" + signature.slice(66, 130);
+
+        await proxy1
+          .connect(signer1)
+          .depositWithPermit(
+            deployer.address,
+            token.target,
+            100000000,
+            deployer.address,
+            data.message.deadline,
+            v,
+            r,
+            s
+          );
+
+        let tokenAddress = token.target;
+        let vaultAddress = proxy1.target;
+        expect(await token.balanceOf(proxy1.target)).to.be.equal(100000000);
+
+        let time = Math.round(Date.now() / 1000);
+
+        let requestID = 100;
+
+        let sig0 = createSignature(
+          deployer,
+          deployer.address,
+          100000000,
+          tokenAddress,
+          time + 3600 * 24,
+          requestID,
+          vaultAddress,
+          0
+        );
+        let sig1 = createSignature(
+          signer1,
+          deployer.address,
+          100000000,
+          tokenAddress,
+          time + 3600 * 24,
+          requestID,
+          vaultAddress,
+          0
+        );
+
+        await expect(
+          proxy
+            .connect(deployer)
+            .withdrawERC20(
+              deployer.address,
+              deployer.address,
+              100000000,
+              tokenAddress,
+              time + 3600 * 24,
+              requestID,
+              [deployer.address, signer1.address],
+              [sig0, sig1]
+            )
+        ).to.be.revertedWith("Daily withdrawal limit exceeded");
+
+        await proxy1.setDailyWithdrawLimit(tokenAddress, 100000000000);
+
+        await proxy
+          .connect(deployer)
+          .withdrawERC20(
+            deployer.address,
+            deployer.address,
+            100000000,
+            tokenAddress,
+            time + 3600 * 24,
+            requestID,
+            [deployer.address, signer1.address],
+            [sig0, sig1]
+          );
+
+        // console.log("events", txreceipt1.logs);
+
+        //("args:", txreceipt.logs[1].args);
+        expect(await token.balanceOf(proxy.target)).to.equal(0);
       });
     });
   });
