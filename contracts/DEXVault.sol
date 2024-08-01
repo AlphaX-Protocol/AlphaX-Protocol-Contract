@@ -22,7 +22,7 @@ contract DEXVault is
     // Events
 
     event Deposit(
-        address indexed sender,
+        address indexed owner,
         address indexed receiver,
         address indexed token,
         uint256 amount

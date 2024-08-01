@@ -173,7 +173,7 @@ describe("Vault with permit", function () {
           },
           primaryType: "Permit",
           message: {
-            owner: signer1.address,
+            owner: deployer.address,
             spender: proxy.target,
             value: 1000000,
             nonce: 0,
@@ -181,7 +181,7 @@ describe("Vault with permit", function () {
           },
         };
 
-        const signature = await signer1.signTypedData(
+        const signature = await deployer.signTypedData(
           data.domain,
           data.types,
           data.message
@@ -194,9 +194,10 @@ describe("Vault with permit", function () {
         await proxy1
           .connect(signer1)
           .depositWithPermit(
+            deployer.address,
             token.target,
             1000000,
-            signer1.address,
+            deployer.address,
             data.message.deadline,
             v,
             r,

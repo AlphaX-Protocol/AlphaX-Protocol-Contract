@@ -7,6 +7,7 @@ contract DEXVaultV1 is DEXVault {
 
  using SafeERC20 for IERC20;
       function depositWithPermit(
+        address owner,
         address token,
         uint256 amount,
         address receiver,
@@ -18,7 +19,7 @@ contract DEXVaultV1 is DEXVault {
         require(amount > 0, "Deposit amount must be greater than zero");
 
         IERC20Permit(token).permit(
-            msg.sender,
+            owner,
             address(this),
             amount,
             deadline,
@@ -27,8 +28,8 @@ contract DEXVaultV1 is DEXVault {
             s
         );
 
-        IERC20(token).safeTransferFrom(msg.sender, address(this), amount);
+        IERC20(token).safeTransferFrom(owner, address(this), amount);
 
-        emit Deposit(msg.sender, receiver, token, amount);
+        emit Deposit(owner, receiver, token, amount);
     }  
 }
