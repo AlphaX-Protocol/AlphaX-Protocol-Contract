@@ -275,6 +275,7 @@ describe("Vault", function () {
           .connect(deployer)
           .withdrawERC20(
             deployer.address,
+            deployer.address,
             100000000,
             tokenAddress,
             time,
@@ -332,6 +333,7 @@ describe("Vault", function () {
         .connect(deployer)
         .withdrawERC20(
           deployer.address,
+          deployer.address,
           100000000,
           tokenAddress,
           time + 3600 * 24,
@@ -342,10 +344,10 @@ describe("Vault", function () {
 
       let txreceipt1 = await result1.wait();
 
-      //("events", txreceipt1.logs);
+      // console.log("events", txreceipt1.logs);
 
       expect(txreceipt1.logs[1].topics[0]).to.equal(
-        "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db"
+        "0x16976c9767f5174e5289de7594402a1e174ebd2a9622aa3ebafd14e5af4e2ab9"
       );
       expect(txreceipt1.logs[1].topics[1]).to.equal(
         "0x000000000000000000000000" + deployer.address.slice(2).toLowerCase()
@@ -405,6 +407,7 @@ describe("Vault", function () {
         .connect(deployer)
         .withdrawETH(
           deployer.address,
+          deployer.address,
           ETH,
           time + 3600 * 24,
           requestID,
@@ -418,15 +421,16 @@ describe("Vault", function () {
       let args = txreceipt1.logs[0].args;
 
       expect(txreceipt1.logs[0].topics[0]).to.equal(
-        "0xfbde797d201c681b91056529119e0b02407c7bb96a4a2c75c01fc9667232c8db"
+        "0x16976c9767f5174e5289de7594402a1e174ebd2a9622aa3ebafd14e5af4e2ab9"
       );
       expect(args[0]).to.equal(deployer.address);
       expect(args[1]).to.equal(deployer.address);
-      expect(args[2]).to.equal("0x0000000000000000000000000000000000000000");
+      expect(args[2]).to.equal(deployer.address);
+      expect(args[3]).to.equal("0x0000000000000000000000000000000000000000");
       //amount
-      expect(args[3]).to.equal(1000000000000000000n);
+      expect(args[4]).to.equal(1000000000000000000n);
       //requestId
-      expect(args[4]).to.equal(100n);
+      expect(args[5]).to.equal(100n);
 
       expect(await token.balanceOf(proxy.target)).to.equal(0);
     });
@@ -486,6 +490,7 @@ describe("Vault", function () {
           .connect(deployer)
           .withdrawERC20(
             deployer.address,
+            deployer.address,
             100000000,
             tokenAddress,
             time + 3600 * 24,
@@ -517,6 +522,7 @@ describe("Vault", function () {
           .connect(deployer)
           .withdrawERC20(
             deployer.address,
+            deployer.address,
             100000000,
             tokenAddress,
             time + 3600 * 24,
@@ -530,6 +536,7 @@ describe("Vault", function () {
         proxy
           .connect(deployer)
           .withdrawERC20(
+            deployer.address,
             deployer.address,
             100000000,
             tokenAddress,
@@ -710,6 +717,7 @@ describe("Vault", function () {
           .connect(deployer)
           .withdrawERC20(
             deployer.address,
+            deployer.address,
             100000000,
             tokenAddress,
             time + 3600 * 24,
@@ -726,6 +734,7 @@ describe("Vault", function () {
       await proxy
         .connect(deployer)
         .withdrawERC20(
+          deployer.address,
           deployer.address,
           100000000,
           tokenAddress,

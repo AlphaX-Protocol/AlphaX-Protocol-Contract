@@ -29,7 +29,8 @@ contract DEXVault is
     );
 
     event Withdraw(
-        address indexed sender,
+        address indexed owner,
+        address  sender,
         address indexed receiver,
         address indexed token,
         uint256 amount,
@@ -155,6 +156,7 @@ contract DEXVault is
      * @param  signatures the signatures of tx
      */
     function withdrawETH(
+        address owner,
         address payable to,
         uint256 amount,
         uint256 expireTime,
@@ -207,7 +209,7 @@ contract DEXVault is
             "Address: unable to send value, recipient may have reverted"
         );
 
-        emit Withdraw(msg.sender, to, address(0), amount, requestId);
+        emit Withdraw(msg.sender, owner , to, address(0), amount, requestId);
     }
 
     /**
@@ -222,6 +224,7 @@ contract DEXVault is
      * @param  signatures the signatures of tx
      */
     function withdrawERC20(
+        address owner,
         address to,
         uint256 amount,
         address token,
@@ -266,7 +269,7 @@ contract DEXVault is
         tryInsertRequestId(block.chainid, requestId, to, amount, token);
         // Success, send ERC20 token
         IERC20(token).safeTransfer(to, amount);
-        emit Withdraw(msg.sender, to, token, amount, requestId);
+        emit Withdraw(msg.sender, owner,  to, token, amount, requestId);
     }
 
     /**
