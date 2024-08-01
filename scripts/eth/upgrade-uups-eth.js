@@ -13,10 +13,12 @@ async function main() {
 
   const vault2 = await ethers.getContractFactory("DEXVaultV1");
 
-  let vaultAddress = "0x552E7A55802f3350C707a243E402aa50Eda9D286";
+  let vaultAddress = "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99";
   let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
 
   let proxy = await upgrades.upgradeProxy(vaultAddress, vault2);
+
+  await proxy.setDailyWithdrawLimit(tokenAddress, "200000000000");
 }
 
 // We recommend this pattern to be able to use async/await everywhere
