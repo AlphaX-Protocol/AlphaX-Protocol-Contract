@@ -10,7 +10,6 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
 
 contract DEXVaultV1 is
     ReentrancyGuardUpgradeable,
@@ -240,12 +239,6 @@ contract DEXVaultV1 is
         );
 
         dailyWithdrawals[address(0)] += amount;
-
-
-         require(
-            to.code.length == 0,
-            "Recipient cannot be a contract address"
-        );
 
         (bool success, ) = to.call{value: amount}("");
         require(
