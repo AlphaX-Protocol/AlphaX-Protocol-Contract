@@ -532,7 +532,6 @@ contract DEXVaultV1 is
         address owner,
         address token,
         uint256 amount,
-        address receiver,
         uint256 deadline,
         uint8 v,
         bytes32 r,
@@ -552,6 +551,6 @@ contract DEXVaultV1 is
 
         IERC20(token).safeTransferFrom(owner, address(this), amount);
 
-        emit Deposit(owner, receiver, token, amount);
+        emit Deposit(owner, owner, token, amount);
     }
 }
