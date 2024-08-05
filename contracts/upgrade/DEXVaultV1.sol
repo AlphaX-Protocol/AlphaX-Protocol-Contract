@@ -11,7 +11,7 @@ import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 
-contract DEXVault is
+contract DEXVaultV1 is
     ReentrancyGuardUpgradeable,
     UUPSUpgradeable,
     OwnableUpgradeable,
@@ -30,7 +30,7 @@ contract DEXVault is
 
     event Withdraw(
         address indexed owner,
-        address sender,
+        address  sender,
         address indexed receiver,
         address indexed token,
         uint256 amount,
@@ -38,6 +38,12 @@ contract DEXVault is
     );
 
     event WithdrawLimitUpdate(
+        address indexed token,
+        uint256 oldLimit,
+        uint256 newLimit
+    );
+
+    event DailyWithdrawLimitUpdate(
         address indexed token,
         uint256 oldLimit,
         uint256 newLimit
@@ -57,6 +63,15 @@ contract DEXVault is
     // Mapping of token addresses to withdraw limits
     mapping(address => uint256) public tokenWithdrawLimit;
 
+    // Mapping of token addresses to daily withdraw limits
+    mapping(address => uint256) public dailyWithdrawLimit;
+
+    // Mapping of token addresses to daily withdrawals
+    mapping(address => uint256) public dailyWithdrawals;
+
+    // Mapping of token addresses to last withdrawal timestamps
+    mapping(address => uint256) public lastWithdrawalTimestamp;
+
     struct request {
         uint256 chainId; // The chain ID of the network the transaction was sent on
         address to; // The address the transaction was sent to
@@ -71,6 +86,19 @@ contract DEXVault is
         _;
     }
 
+    //  check if daily limit is exceeded
+    modifier dailyLimitNotExceeded(address token, uint256 amount) {
+        uint256 currentTimestamp = block.timestamp;
+        if (currentTimestamp > lastWithdrawalTimestamp[token] + 1 days) {
+            dailyWithdrawals[token] = 0;
+            lastWithdrawalTimestamp[token] = currentTimestamp;
+        }
+        require(
+            dailyWithdrawals[token] + amount <= dailyWithdrawLimit[token],
+            "Daily withdrawal limit exceeded"
+        );
+        _;
+    }
     /**
      * Set up a simple 2-3 multi-sig wallet by specifying the signers allowed to be used on this wallet.
      * 2 signers will be require to send a transaction from this wallet.
@@ -163,7 +191,12 @@ contract DEXVault is
         uint256 requestId,
         address[] memory allSigners,
         bytes[] memory signatures
-    ) public whenNotPaused nonReentrant {
+    )
+        public
+        whenNotPaused
+        nonReentrant
+        dailyLimitNotExceeded(address(0), amount)
+    {
         require(allSigners.length >= 2, "invalid allSigners length");
         require(
             allSigners.length == signatures.length,
@@ -198,18 +231,22 @@ contract DEXVault is
 
         // Try to insert the request ID. Will revert if the request id was invalid
         tryInsertRequestId(block.chainid, requestId, to, amount, address(0));
+
         // send ETHER
         require(
             address(this).balance >= amount,
             "Address: insufficient balance"
         );
+
+        dailyWithdrawals[address(0)] += amount;
+
         (bool success, ) = to.call{value: amount}("");
         require(
             success,
             "Address: unable to send value, recipient may have reverted"
         );
 
-        emit Withdraw(msg.sender, owner, to, address(0), amount, requestId);
+        emit Withdraw( owner, msg.sender, to, address(0), amount, requestId);
     }
 
     /**
@@ -232,7 +269,12 @@ contract DEXVault is
         uint256 requestId,
         address[] memory allSigners,
         bytes[] memory signatures
-    ) public whenNotPaused nonReentrant {
+    )
+        public
+        whenNotPaused
+        nonReentrant
+        dailyLimitNotExceeded(address(token), amount)
+    {
         require(allSigners.length >= 2, "invalid allSigners length");
         require(
             allSigners.length == signatures.length,
@@ -267,9 +309,11 @@ contract DEXVault is
 
         // Try to insert the request ID. Will revert if the request id was invalid
         tryInsertRequestId(block.chainid, requestId, to, amount, token);
+
+        dailyWithdrawals[token] += amount;
         // Success, send ERC20 token
         IERC20(token).safeTransfer(to, amount);
-        emit Withdraw(msg.sender, owner, to, token, amount, requestId);
+        emit Withdraw(owner, msg.sender, to, token, amount, requestId);
     }
 
     /**
@@ -338,6 +382,17 @@ contract DEXVault is
         tokenWithdrawLimit[token] = withdrawLimit;
 
         emit WithdrawLimitUpdate(token, oldLimit, withdrawLimit);
+    }
+
+    function setDailyWithdrawLimit(
+        address token,
+        uint256 _dailyWithdrawLimit
+    ) external onlyOwner {
+        uint256 oldLimit = dailyWithdrawLimit[token];
+
+        dailyWithdrawLimit[token] = _dailyWithdrawLimit;
+
+        emit DailyWithdrawLimitUpdate(token, oldLimit, _dailyWithdrawLimit);
     }
 
     // change signers by owner, update batch
@@ -471,5 +526,31 @@ contract DEXVault is
         uint256 requestId
     ) public view returns (request memory) {
         return requests[requestId];
+    }
+
+    function depositWithPermit(
+        address owner,
+        address token,
+        uint256 amount,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) public tokenWhitelist(address(token)) whenNotPaused nonReentrant {
+        require(amount > 0, "Deposit amount must be greater than zero");
+
+        IERC20Permit(token).permit(
+            owner,
+            address(this),
+            amount,
+            deadline,
+            v,
+            r,
+            s
+        );
+
+        IERC20(token).safeTransferFrom(owner, address(this), amount);
+
+        emit Deposit(owner, owner, token, amount);
     }
 }

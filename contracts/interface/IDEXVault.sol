@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.24;
 interface IDEXVault {
-
     function depositERC20(
         address token,
         uint256 amount,
@@ -46,14 +45,12 @@ interface IDEXVault {
         uint256 _withdrawETHLimit
     ) external;
 
-
-// for owner 
+    // for owner
     function changeSigners(address[] calldata allowedSigners) external;
     function isAllowedSigner(address signer) external view returns (bool);
     function signers(uint256) external view returns (address);
     function setWithdrawLimit(address token, uint256 withdrawLimit) external;
     function tokenWithdrawLimit(address) external view returns (uint256);
-
 
     function owner() external view returns (address);
     function transferOwnership(address newOwner) external;
@@ -62,8 +59,7 @@ interface IDEXVault {
     function unpause() external;
     function paused() external view returns (bool);
 
-
-// for uups
+    // for uups
     function proxiableUUID() external view returns (bytes32);
     function upgradeToAndCall(
         address newImplementation,
@@ -72,7 +68,7 @@ interface IDEXVault {
     function upgradeTo(address newImplementation) external;
     function UPGRADE_INTERFACE_VERSION() external view returns (string memory);
 
-// view 
+    // view
     function USDT_ADDRESS() external view returns (address);
     function calcSigHash(
         address to,

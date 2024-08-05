@@ -13,32 +13,12 @@ async function main() {
 
   const vault2 = await ethers.getContractFactory("DEXVaultV1");
 
-  let vaultAddress = "0x640A691bB8422C6e0252C9d4b3f6f09Df217434D";
-  let tokenAddress = "0x0668f9B182a5977781d73cD416eF985145B9Cd80";
+  let vaultAddress = "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99";
+  let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
 
   let proxy = await upgrades.upgradeProxy(vaultAddress, vault2);
 
-  //===============2 test
-
-  // const token = (await ethers.getContractFactory("SimpleToken")).attach(
-  //   tokenAddress
-  // );
-
-  // await token.connect(deployer).approve(proxy.target, 100000000000);
-
-  // await proxy
-  //   .connect(deployer)
-  //   .setWithdrawLimit(tokenAddress, "100000000000000");
-
-  // await proxy.connect(deployer).depositERC20(tokenAddress, 100000000);
-
-  // await proxy.connect(deployer).depositETH({ value: 1000000000 });
-
-  // await proxy.connect(deployer).pause();
-
-  // await proxy.withdrawETHByOwner(deployer.address, 1000000000);
-
-  // await proxy.connect(deployer).unpause();
+  await proxy.setDailyWithdrawLimit(tokenAddress, "200000000000");
 }
 
 // We recommend this pattern to be able to use async/await everywhere
