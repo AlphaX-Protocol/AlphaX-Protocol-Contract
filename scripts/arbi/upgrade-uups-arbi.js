@@ -17,7 +17,7 @@ async function main() {
   let tokenAddress = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
 
   let proxy = await upgrades.upgradeProxy(vaultAddress, vault2);
-  await proxy.setDailyWithdrawLimit(tokenAddress, "200000000000");
+  //await proxy.setDailyWithdrawLimit(tokenAddress, "200000000000");
 }
 
 // We recommend this pattern to be able to use async/await everywhere
