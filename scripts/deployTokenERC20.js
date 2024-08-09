@@ -14,9 +14,9 @@ async function main() {
   // console.log('Account balance:', (await deployer.getBalance()).toString());
 
   const token = await deployContract(
-    "SimpleToken",
+    "SimpleTokenWithPermit",
     ["Test Token", "USDTTest", 6, 1000000000],
-    deployer,
+    deployer
   );
 
   console.log("Token address:", token.address);
@@ -44,7 +44,7 @@ async function deployContract(name, params, deployer = undefined) {
 async function verifyContract(
   contractNameOrAddress,
   network = hre.network.name,
-  constructorArguments = null,
+  constructorArguments = null
 ) {
   if (network == "hardhat" || network == "localhost") {
     console.log("hardhat network skip verifyContract");
