@@ -149,8 +149,8 @@ contract DEXVaultV1 is
     function depositETH(
         address receiver
     ) public payable whenNotPaused nonReentrant {
+       
         require(msg.value > 0, "Deposit amount must be greater than zero");
-
         emit Deposit(msg.sender, receiver, address(0), msg.value);
     }
 

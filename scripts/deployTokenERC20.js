@@ -15,7 +15,7 @@ async function main() {
 
   const token = await deployContract(
     "SimpleTokenWithPermit",
-    ["Test Token", "USDTTest", 6, 1000000000],
+    ["USDC Test", "USDCTest", 6, 1000000000],
     deployer
   );
 
@@ -26,8 +26,8 @@ async function main() {
 
   // verify contract
   await verifyContract(token.address, network.name, [
-    "Test Token",
-    "USDTTest",
+    "USDC Test",
+    "USDCTest",
     6,
     1000000000,
   ]);
