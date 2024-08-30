@@ -32,3 +32,20 @@ Arbi:
  Proxy contract 0xA61a6E696B7C566DA42B80dA27d96e7104bcec99
  getImplementationAddress 0x552E7A55802f3350C707a243E402aa50Eda9D286
 ```
+
+## 1inch
+
+## run
+
+arbi
+no permit :
+
+```
+npx hardhat run scripts/arbi/oneinch/oneinch-arbi-swap-test-no-permit.js --network arbitrum
+```
+
+permit :
+
+```
+npx hardhat run scripts/arbi/oneinch/oneinch-arbi-swap-test.js --network arbitrum
+```
