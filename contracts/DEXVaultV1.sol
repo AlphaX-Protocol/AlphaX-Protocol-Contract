@@ -30,7 +30,7 @@ contract DEXVaultV1 is
 
     event Withdraw(
         address indexed owner,
-        address  sender,
+        address sender,
         address indexed receiver,
         address indexed token,
         uint256 amount,
@@ -149,7 +149,6 @@ contract DEXVaultV1 is
     function depositETH(
         address receiver
     ) public payable whenNotPaused nonReentrant {
-       
         require(msg.value > 0, "Deposit amount must be greater than zero");
         emit Deposit(msg.sender, receiver, address(0), msg.value);
     }
@@ -246,7 +245,7 @@ contract DEXVaultV1 is
             "Address: unable to send value, recipient may have reverted"
         );
 
-        emit Withdraw( owner, msg.sender, to, address(0), amount, requestId);
+        emit Withdraw(owner, msg.sender, to, address(0), amount, requestId);
     }
 
     /**

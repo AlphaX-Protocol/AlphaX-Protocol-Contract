@@ -28,6 +28,13 @@ module.exports = {
       url: "http://localhost:8545",
     },
 
+    hardhat: {
+      forking: {
+        url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID,
+        blockNumber: 20638640,
+      },
+    },
+
     mainnet: {
       url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID, //<---- YOUR INFURA ID! (or it won't work)
       accounts: mnemonic(),

@@ -8,6 +8,7 @@ npx hardhat compile
 npx hardhat test
 npx hardhat coverage
 npx hardhat node
+npx prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'
 
 ```
 

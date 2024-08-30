@@ -8,13 +8,8 @@ const fs = require("fs");
 require("dotenv").config();
 
 const apiKey = process.env.APIKEY;
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
 
 const chainId = 42161; // Chain ID for Optimism
-
-const arbiRpcUrl = "https://arbitrum.llamarpc.com";
-
-// const provider = new ethers.providers.JsonRpcProvider(arbiRpcUrl);
 
 const apiBaseUrl = `https://api.1inch.dev/swap/v6.0/${chainId}`;
 
@@ -24,21 +19,20 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
 
   // update!!!
-  let usdtAddress = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
-
+  let usdtToken = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
   let usdcToken = "0xaf88d065e77c8cc2239327c5edb3a432268e5831";
 
-  //V5
-  //const oneinchrouter = "0x1111111254eeb25477b68fb85ed929f73a960582";
   //V6
   const oneinchrouter = "0x111111125421cA6dc452d289314280a0f8842A65";
 
-  let routerAddress = "0xFC1Abaf333377F3E3D51eD5e5Ff15ef477FE43fe";
+  let routerAddress = "0xCcc1Fb4A7eFd8AfA275043a8Aa295a09309c0D80";
+
+  let swapAmount = 1000000;
 
   const swapParams = {
     src: usdcToken, // Token address of 1INCH
-    dst: usdtAddress, // Token address of DAI
-    amount: "1000000", // Amount of 1INCH to swap (in wei)
+    dst: usdtToken, // Token address of DAI
+    amount: swapAmount, // Amount of 1INCH to swap (in wei)
     from: routerAddress,
     slippage: 1, // Maximum acceptable slippage percentage for the swap (e.g., 1 for 1%)
     disableEstimate: true, // Set to true to disable estimation of swap details
@@ -56,14 +50,10 @@ async function main() {
 
   console.log("Router address:", router.target);
 
-  // verify contract
-  // await verifyContract(router.target, network.name);
-
   //===============2 test deposit approve
 
-  // const token = (await ethers.getContractFactory("IERC20Permit")).attach(
-  //   usdcToken
-  // );
+  // const usdcERC20 = await ethers.getContractAt("IERC20", usdcToken, deployer);
+  // await usdcERC20.approve(router.target, swapAmount);
 
   // await token.connect(deployer).approve(router.target, 10000000);
 
@@ -116,8 +106,8 @@ async function main() {
   await router.swapWithPermitToUSDTAndDeposit(
     deployer.address,
     usdcToken,
-    1000000,
-    989999,
+    swapAmount,
+    (swapAmount * 9) / 10,
     data.message.deadline,
     v,
     r,
@@ -125,6 +115,7 @@ async function main() {
     swapData
   );
 
+  // no permit version
   // await router.swapToUSDTAndDeposit(
   //   deployer.address,
   //   usdcToken,
@@ -132,55 +123,6 @@ async function main() {
   //   989999,
   //   swapData
   // );
-}
-
-async function deployContract(name, params, deployer = undefined) {
-  const contract = await hre.ethers.deployContract(name, params, deployer);
-  await contract.waitForDeployment();
-
-  contract.address = contract.target;
-  return contract;
-}
-
-async function verifyContract(
-  contractNameOrAddress,
-  network = hre.network.name,
-  constructorArguments = null
-) {
-  if (network == "hardhat" || network == "localhost") {
-    console.log("hardhat network skip verifyContract");
-    return;
-  }
-
-  let address;
-  if (isAddress(contractNameOrAddress)) {
-    address = contractNameOrAddress;
-  } else {
-    const data = fs.readFileSync(DEPLOYMENGT_DIR, "utf8");
-    const addresses = JSON.parse(data);
-    address = addresses[contractNameOrAddress];
-  }
-
-  if (!address) {
-    console.error("verifyContract error: Contract depoloyment not found.");
-    return;
-  }
-
-  let params = {
-    address,
-    network,
-    constructorArguments: [],
-  };
-  if (constructorArguments) {
-    params.constructorArguments = constructorArguments;
-  }
-
-  try {
-    await hre.run("verify:verify", params);
-    console.log("verifyContract successfully!");
-  } catch (e) {
-    console.error("verifyContract error:", e);
-  }
 }
 
 async function buildTxForSwap(swapParams) {
