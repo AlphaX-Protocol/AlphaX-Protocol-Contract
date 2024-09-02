@@ -45,6 +45,9 @@ contract DEXVaultRouter is
         VAULT_ADDRESS = _vaultAddress;
     }
 
+
+
+   // Swap token to USDT and deposit to vault, need approve first
     function swapToUSDTAndDeposit(
         address receiver,
         address token,
@@ -83,6 +86,7 @@ contract DEXVaultRouter is
         );
     }
 
+  // Swap token to USDT and deposit to vault, for platform to invoke
     function swapWithPermitToUSDTAndDeposit(
         address owner,
         address token,
@@ -156,7 +160,7 @@ contract DEXVaultRouter is
         require(success, "exchange failed");
 
         (returnAmount) = abi.decode(returndata, (uint256));
-        
+
         require(
             returnAmount >= minReturnAmount,
             "received USDT less than minReturnAmount"

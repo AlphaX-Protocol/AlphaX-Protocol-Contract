@@ -94,21 +94,6 @@ function isAddress(str) {
   return /^0x[a-fA-F0-9]{40}$/.test(str);
 }
 
-async function broadCastRawTransaction(rawTransaction) {
-  const response = await fetch(broadcastApiUrl, {
-    method: "post",
-    body: JSON.stringify({ rawTransaction }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-  });
-
-  const data = await response.json();
-  //  console.log("broadCast", data);
-  return data.transactionHash;
-}
-
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()

@@ -91,6 +91,8 @@ async function main() {
     },
   };
 
+  console.log("data", data);
+
   const signature = await deployer.signTypedData(
     data.domain,
     data.types,
@@ -101,24 +103,15 @@ async function main() {
   const r = signature.slice(0, 66);
   const s = "0x" + signature.slice(66, 130);
 
-  await router.swapWithPermitToUSDTAndDeposit(
-    deployer.address,
-    usdcToken,
-    swapAmount,
-    (swapAmount * 9) / 10, // fix this
-    data.message.deadline,
-    v,
-    r,
-    s,
-    swapData
-  );
-
-  // no permit version
-  // await router.swapToUSDTAndDeposit(
+  // await router.swapWithPermitToUSDTAndDeposit(
   //   deployer.address,
   //   usdcToken,
-  //   1000000,
-  //   989999,
+  //   swapAmount,
+  //   (swapAmount * 9) / 10, // fix this
+  //   data.message.deadline,
+  //   v,
+  //   r,
+  //   s,
   //   swapData
   // );
 }
