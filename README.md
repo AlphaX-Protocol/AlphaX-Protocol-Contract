@@ -21,6 +21,9 @@ npx hardhat run scripts/deployTokenERC20.js --network sepolia
 npx hardhat run scripts/deploy-uups.js --network sepolia
 
 
+npx hardhat run scripts/upgrade-uups.js --network sepolia
+
+
 npx hardhat verify --network sepolia {address}
 
 ```
