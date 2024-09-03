@@ -20,6 +20,9 @@ npx hardhat run scripts/deployTokenERC20.js --network sepolia
 
 npx hardhat run scripts/deploy-uups.js --network sepolia
 
+
+npx hardhat verify --network sepolia {address}
+
 ```
 
 ```
@@ -37,15 +40,52 @@ Arbi:
 
 ## run
 
+check owner address first!
+
 arbi
 no permit :
 
 ```
-npx hardhat run scripts/arbi/oneinch/oneinch-arbi-swap-test-no-permit.js --network arbitrum
+npx hardhat run scripts/arbi/oneinch/demo/oneinch-arbi-swap-test-no-permit.js --network arbitrum
+
+
+
 ```
 
 permit :
 
 ```
-npx hardhat run scripts/arbi/oneinch/oneinch-arbi-swap-test.js --network arbitrum
+npx hardhat run scripts/arbi/oneinch/demo/oneinch-arbi-swap-test.js --network arbitrum
+```
+
+for upgrade :
+
+```
+
+npx hardhat run scripts/arbi/oneinch/oneinch-arbi-upgrade.js --network arbitrum
+
+```
+
+for swap :
+
+```
+npx hardhat run scripts/arbi/oneinch/oneinch-arbi-swap.js --network arbitrum
+
+```
+
+ETH:
+
+for upgrade :
+
+```
+
+npx hardhat run scripts/eth/oneinch/oneinch-eth-upgrade.js --network mainnet
+
+```
+
+for swap :
+
+```
+npx hardhat run scripts/eth/oneinch/oneinch-eth-swap.js --network mainnet
+
 ```

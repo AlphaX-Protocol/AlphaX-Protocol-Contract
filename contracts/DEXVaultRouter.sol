@@ -72,7 +72,6 @@ contract DEXVaultRouter is
         );
         IDEXVault vault = IDEXVault(VAULT_ADDRESS);
 
-        // usdt mainet need
         IERC20(USDT_ADDRESS).safeIncreaseAllowance(VAULT_ADDRESS, usdtAmount);
 
         vault.depositERC20(USDT_ADDRESS, usdtAmount, receiver);
@@ -111,6 +110,7 @@ contract DEXVaultRouter is
             s
         );
 
+        // only for permit erc20
         uint256 usdtAmount = swapToUSDT(
             owner,
             token,
@@ -154,24 +154,25 @@ contract DEXVaultRouter is
         }
 
         // Swap token
-        (bool success, bytes memory returndata) = AGGREGATION_ROUTER_ADDRESS
+        (bool success, ) = AGGREGATION_ROUTER_ADDRESS
             .call{value: msg.value}(exchangeData);
 
         require(success, "exchange failed");
 
-        (returnAmount) = abi.decode(returndata, (uint256));
+        uint256 afterSwapBalance = IERC20(USDT_ADDRESS).balanceOf(
+            address(this)
+        );
+    
+        require(
+            afterSwapBalance > beforeSwapBalance,
+            "received USDT less than 0"
+        );
+
+        returnAmount = afterSwapBalance - beforeSwapBalance;
 
         require(
             returnAmount >= minReturnAmount,
             "received USDT less than minReturnAmount"
-        );
-
-        uint256 afterSwapBalance = IERC20(USDT_ADDRESS).balanceOf(
-            address(this)
-        );
-        require(
-            afterSwapBalance == beforeSwapBalance + returnAmount,
-            "swap incorrect"
         );
         return returnAmount;
     }

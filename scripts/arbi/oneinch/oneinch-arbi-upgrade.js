@@ -8,7 +8,7 @@ async function main() {
 
   const routerV1 = await ethers.getContractFactory("DEXVaultRouter");
 
-  let routerAddress = "0xFC1Abaf333377F3E3D51eD5e5Ff15ef477FE43fe";
+  let routerAddress = "0xCcc1Fb4A7eFd8AfA275043a8Aa295a09309c0D80";
 
   let proxy = await upgrades.upgradeProxy(routerAddress, routerV1);
 }
