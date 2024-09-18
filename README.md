@@ -4,6 +4,8 @@ The main function of the DEXVault to serve as a secure vault for depositing and 
 
 Peripheral Contract: The DEXVaultRouter contract efficiently handles token swaps to USDT and vault deposits with 1inch integration, and is built to be upgradeable using UUPS. The contract emphasizes security and usability through reentrancy protection, support for permit-enabled tokens, and a flexible structure for handling different tokens, including native ETH.
 
+## Build
+
 ```shell
 
 npx hardhat compile
