@@ -352,7 +352,7 @@ describe("Vault with permit", function () {
 
         let requestID = 100;
 
-        let sig0 = createSignature(
+        let sig0 = await createSignature(
           deployer,
           deployer.address,
           100000000,
@@ -362,7 +362,7 @@ describe("Vault with permit", function () {
           vaultAddress,
           0
         );
-        let sig1 = createSignature(
+        let sig1 = await createSignature(
           signer1,
           deployer.address,
           100000000,
@@ -372,6 +372,8 @@ describe("Vault with permit", function () {
           vaultAddress,
           0
         );
+
+        console.log("sig0", sig0);
 
         await expect(
           proxy
