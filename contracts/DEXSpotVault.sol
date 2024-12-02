@@ -10,6 +10,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import "./interfaces/IDEXSpotVault.sol";
 
 contract DEXSpotVault is
     ReentrancyGuardUpgradeable,
@@ -22,8 +23,6 @@ contract DEXSpotVault is
   // Public fields
     address public AGGREGATION_ROUTER_ADDRESS; //1inch AggregationRouterV6 address
     address public VAULT_ADDRESS; //   dex vault address
-
-    address public operator;
 
     event Withdraw(
         address indexed owner,
@@ -40,27 +39,25 @@ contract DEXSpotVault is
         uint256 amountOut
     );
 
-
+    mapping(bytes32 => bool) private usedRequestIds;
 
     function initialize(
          address _vaultAddress,
          address _aggregationRouterV6,
-        address  _owner,
-         address _operator
+        address  _owner
     ) public initializer {
         __Ownable_init(_owner);
         __UUPSUpgradeable_init();
         __Pausable_init();
         AGGREGATION_ROUTER_ADDRESS = _aggregationRouterV6;
         VAULT_ADDRESS = _vaultAddress;
-        operator = _operator;
-      
     }
 
 // spot swap , weth return   todo authority
 
  function spotSwap(
         address owner,
+        bytes32 requestId,
         address tokenIn,
         uint256 amountIn,
         address tokenOut,
@@ -68,18 +65,23 @@ contract DEXSpotVault is
         bytes calldata exchangeData
     ) public  nonReentrant {
 
-        //todo: only operator allowed
-       require(msg.sender == operator , "only operator allowed");
+
+        //check requestId
+        require(checkRequestId(requestId), "invalid request id");
+
+        // Ensure the caller is a valid signer
+        require(isSigner(msg.sender), "invalid signer");
+
+        require(IERC20(tokenIn).balanceOf(address(this)) >= amountIn, "vault has not enough token");
     
-       require(IERC20(tokenIn).balanceOf(address(this)) >= amountIn, "vault has not enough token");
-    
+      
 
         uint256 amountOut = swap(
             tokenIn,
             amountIn,
             tokenOut,
             minReturnAmount,
-            exchangeData
+            exchangeData,
         );
        
         emit Swap(
@@ -213,13 +215,21 @@ contract DEXSpotVault is
     // override _authorizeUpgrade , uups
     function _authorizeUpgrade(address) internal override onlyOwner {}
 
+    function checkRequestId(bytes32 requestId) internal returns (bool) {
+        if (usedRequestIds[requestId]) {
+            return false; // Request ID has already been used
+        }
+        usedRequestIds[requestId] = true; // Mark this request ID as used
+        return true;
+    }
 
-   
+    function isSigner(address account) internal view returns (bool) {
+        address[] memory signers = IDEXVault(VAULT_ADDRESS).getSigners();
+        for (uint256 i = 0; i < signers.length; i++) {
+            if (signers[i] == account) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
-
-
-
-
-
-
-

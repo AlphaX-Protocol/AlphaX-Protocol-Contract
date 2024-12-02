@@ -49,6 +49,7 @@ interface IDEXVault {
     function changeSigners(address[] calldata allowedSigners) external;
     function isAllowedSigner(address signer) external view returns (bool);
     function signers(uint256) external view returns (address);
+    function getSigners() external view returns (address[] memory);
     function setWithdrawLimit(address token, uint256 withdrawLimit) external;
     function tokenWithdrawLimit(address) external view returns (uint256);
 
