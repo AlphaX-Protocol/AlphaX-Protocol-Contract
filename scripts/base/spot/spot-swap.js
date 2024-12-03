@@ -26,7 +26,7 @@ async function main() {
   //V6
   const oneinchrouter = "0x111111125421cA6dc452d289314280a0f8842A65";
 
-  let spotVaultAddress = "0x617401E8F8360b8bf0b6C849ea49e78DF4a4Ae2a";
+  let spotVaultAddress = "0xB5477E33aAC80206fc0621dd51A2bE7AD7b40613";
 
   let swapAmount = 1000000;
 
@@ -35,7 +35,6 @@ async function main() {
     dst: usdcToken, // 
     amount: swapAmount, // Amount of 1INCH to swap (in wei)
     from: spotVaultAddress,
-    // origin: deployer.address,
     slippage: 1, // Maximum acceptable slippage percentage for the swap (e.g., 1 for 1%)
     disableEstimate: true, // Set to true to disable estimation of swap details
     allowPartialFill: false, // Set to true to allow partial filling of the swap order
@@ -52,16 +51,13 @@ async function main() {
 
   //===============2 test deposit approve
 
-  //  const usdcERC20 = await ethers.getContractAt("IERC20", usdtToken, deployer);
-  //  await usdcERC20.transfer(spotVaultAddress, swapAmount);
+   const usdcERC20 = await ethers.getContractAt("IERC20", usdtToken, deployer);
+  await usdcERC20.transfer(spotVaultAddress, swapAmount);
 
- 
-
-
-  // no permit version
-  await spotVault.spotSwap(
+  
+  let tx = await spotVault.spotSwap(
     deployer.address,
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
+    1,
     usdtToken,
     1000000,
     usdcToken,

@@ -19,7 +19,7 @@ let usdcToken = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 //V6
 const oneinchrouter = "0x111111125421cA6dc452d289314280a0f8842A65";
 
-let vault = "0x05e62aaca7e216c6245243d1ae945a0031f9bc49";
+let vault = "0xf9ff7215cd3e44523f2498505EdB99c345Ad67c0";
 
 async function main() {
   const [deployer, signer1, singer2] = await ethers.getSigners();

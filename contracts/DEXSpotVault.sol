@@ -33,13 +33,14 @@ contract DEXSpotVault is
 
     event Swap(
         address indexed owner,
+        uint256 requestId,
         address indexed tokenIn,
         uint256 amountIn,
         address indexed tokenOut,
         uint256 amountOut
     );
 
-    mapping(bytes32 => bool) private usedRequestIds;
+    mapping(uint256 => bool) private usedRequestIds;
 
 
     modifier onlyVault() {
@@ -68,7 +69,7 @@ contract DEXSpotVault is
 
  function spotSwap(
         address owner,
-        bytes32 requestId,
+        uint256 requestId,
         address tokenIn,
         uint256 amountIn,
         address tokenOut,
@@ -92,6 +93,7 @@ contract DEXSpotVault is
        
         emit Swap(
             owner,
+            requestId,
             tokenIn,
             amountIn,
             tokenOut,
@@ -216,7 +218,7 @@ contract DEXSpotVault is
     // override _authorizeUpgrade , uups
     function _authorizeUpgrade(address) internal override onlyOwner {}
 
-    function checkRequestId(bytes32 requestId) internal returns (bool) {
+    function checkRequestId(uint256 requestId) internal returns (bool) {
         if (usedRequestIds[requestId]) {
             return false; // Request ID has already been used
         }

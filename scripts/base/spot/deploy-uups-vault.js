@@ -23,8 +23,8 @@ async function main() {
     [
       [
         deployer.address,
-        signer1.address,
-        singer2.address,
+        '0xB99A2118f67C38eDB6516D9bdcB92Ef5d8fdC882',
+        '0xEec7073E5f1E60EfB76Fc02bC58C3aDdD5a679D2',
       ],
       tokenAddress, // test token
       20000 * 1000000, //2WU
