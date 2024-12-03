@@ -10,7 +10,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
-import "./interfaces/IDEXSpotVault.sol";
+import "./interfaces/IDEXVault.sol";
 
 contract DEXSpotVault is
     ReentrancyGuardUpgradeable,
@@ -41,6 +41,17 @@ contract DEXSpotVault is
 
     mapping(bytes32 => bool) private usedRequestIds;
 
+
+    modifier onlyVault() {
+        require(msg.sender == VAULT_ADDRESS, "Caller is not the vault");
+        _;
+    }
+
+     modifier validSigner() {
+        require(isSigner(msg.sender), "Caller is not a valid signer");
+        _;
+    }
+
     function initialize(
          address _vaultAddress,
          address _aggregationRouterV6,
@@ -63,25 +74,20 @@ contract DEXSpotVault is
         address tokenOut,
         uint256 minReturnAmount,
         bytes calldata exchangeData
-    ) public  nonReentrant {
+    ) public  nonReentrant  validSigner {
 
 
         //check requestId
         require(checkRequestId(requestId), "invalid request id");
 
-        // Ensure the caller is a valid signer
-        require(isSigner(msg.sender), "invalid signer");
-
         require(IERC20(tokenIn).balanceOf(address(this)) >= amountIn, "vault has not enough token");
-    
-      
 
         uint256 amountOut = swap(
             tokenIn,
             amountIn,
             tokenOut,
             minReturnAmount,
-            exchangeData,
+            exchangeData
         );
        
         emit Swap(
@@ -102,7 +108,6 @@ contract DEXSpotVault is
         bytes calldata exchangeData
     ) internal returns (uint256 returnAmount) {
      
-
         uint256 beforeSwapBalance = IERC20(tokenOut).balanceOf(
             address(this)
         );
@@ -111,7 +116,6 @@ contract DEXSpotVault is
                 AGGREGATION_ROUTER_ADDRESS,
                 amountIn
             );
-    
 
         // Swap token
         (bool success, ) = AGGREGATION_ROUTER_ADDRESS
@@ -153,12 +157,9 @@ contract DEXSpotVault is
         uint256 amount,
         address token
     )
-        public
+        public onlyVault nonReentrant
       
     {
-        //todo: only vault allowed 
-        require(msg.sender == VAULT_ADDRESS, "only vault allowed");
-    
         // Success, send ERC20 token
         IERC20(token).safeTransfer(to, amount);
         emit Withdraw(owner, to, token, amount );
