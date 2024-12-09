@@ -96,3 +96,7 @@ for swap :
 npx hardhat run scripts/eth/oneinch/oneinch-eth-swap.js --network mainnet
 
 ```
+
+## Spot vault
+
+set spot vault address first:
