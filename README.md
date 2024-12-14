@@ -99,4 +99,17 @@ npx hardhat run scripts/eth/oneinch/oneinch-eth-swap.js --network mainnet
 
 ## Spot vault
 
+### BASE
 set spot vault address first:
+1. npx hardhat run scripts/base/spot/deploy-origin-vault.js --network base
+2. npx hardhat run scripts/base/spot/deploy-spot-vault.js --network base
+3. set spot vault address in origin vault ;
+4. transfer owner
+
+ ### ETH
+ 1. npx hardhat run scripts/eth/spot/deploy-spot-vault.js --network mainnet  
+ 2. npx hardhat run scripts/eth/spot/deploy-origin-vault.js --network mainnet 
+ 3. upgradeAndCall origin vault implementation address
+ 4. set spot vault address in origin vault ;
+ 5. transfer owner
+

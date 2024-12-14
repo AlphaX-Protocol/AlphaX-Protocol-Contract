@@ -12,14 +12,12 @@ const chainId = 8453;  // Chain ID
 const apiBaseUrl = `https://api.1inch.dev/swap/v6.0/${chainId}`;
 
 // update!!!
-let usdtAddress = "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2";
-
-let usdcToken = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+let usdtAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
 
 //V6
 const oneinchrouter = "0x111111125421cA6dc452d289314280a0f8842A65";
 
-let vault = "0x552E7A55802f3350C707a243E402aa50Eda9D286";
+let vault = "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99";
 
 async function main() {
   const [deployer, signer1, singer2] = await ethers.getSigners();

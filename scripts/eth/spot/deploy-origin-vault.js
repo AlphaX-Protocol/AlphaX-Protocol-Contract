@@ -11,49 +11,29 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  // update!!! usdt  usdc?
-  let tokenAddress = "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2";
 
   //  console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  const vaultFactory = await ethers.getContractFactory("DEXVaultV2");
+  const Vaultv3 = await ethers.getContractFactory("DEXVaultV2");
 
-  let proxy = await upgrades.deployProxy(
-    vaultFactory,
-    [
-      [
-        deployer.address,
-        '0xB99A2118f67C38eDB6516D9bdcB92Ef5d8fdC882',
-        '0xEec7073E5f1E60EfB76Fc02bC58C3aDdD5a679D2',
-      ],
-      tokenAddress, // test token
-      20000 * 1000000, //2WU
-      BigInt(10) * BigInt("1000000000000000000"), //10 ether
-    ],
-    { initializer: "initialize", kind: "uups" }
-  );
+  let vaultAddress = "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99";
+  let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
+  let spotVaultAddress = "0x61c16f2864983338627c9B130D64023E12165B0f";
 
-  await proxy.waitForDeployment();
-  console.log("Proxy contract", proxy.target);
+  // let proxy = await upgrades.upgradeProxy(vaultAddress, vault3);
+   const vaultv3 = await Vaultv3.deploy();
+   await vaultv3.waitForDeployment();
 
-  const receipt = await proxy.deployTransaction;
-  console.log(
-    " getImplementationAddress",
-    await upgrades.erc1967.getImplementationAddress(proxy.target)
-  );
 
-  // verify contract
-  await verifyContract(proxy.target, network.name);
+  
+  // await proxy.setSpotVault(spotVaultAddress);
 
-  //===============2 test deposit
 
-  // const token = (await ethers.getContractFactory("SimpleToken")).attach(
-  //   tokenAddress,
-  // );
 
-  // await token.connect(deployer).approve(proxy.target, 100000000000);
 
-  // await proxy.connect(deployer).depositERC20(tokenAddress, 100000000);
+
+
+  
 }
 
 async function deployContract(name, params, deployer = undefined) {
