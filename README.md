@@ -111,5 +111,5 @@ set spot vault address first:
  2. npx hardhat run scripts/eth/spot/deploy-origin-vault.js --network mainnet 
  3. upgradeAndCall origin vault implementation address
  4. set spot vault address in origin vault ;
- 5. transfer owner
+
 
