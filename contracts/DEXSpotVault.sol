@@ -203,6 +203,12 @@ contract DEXSpotVault is
         return true;
     }
 
+
+    function setVault(address _dexVault) external onlyOwner {
+        require(_dexVault != address(0), "Invalid vault address");
+        VAULT_ADDRESS = _dexVault;
+    }
+
     // Allows Default Admin to pause the contract
     function pause() public onlyOwner {
         _pause();
