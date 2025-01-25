@@ -11,14 +11,13 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const vault2 = await ethers.getContractFactory("DEXVaultV1");
+  const spotVault1 = await ethers.getContractFactory("DEXSpotVault");
 
-  let vaultAddress = "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99";
-  let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
+  let spotVaultAddress = "0x61c16f2864983338627c9B130D64023E12165B0f";
+ 
+  let proxy = await upgrades.upgradeProxy(spotVaultAddress, spotVault1);
 
-  let proxy = await upgrades.upgradeProxy(vaultAddress, vault2);
-
-  await proxy.setDailyWithdrawLimit(tokenAddress, "500000000000");
+  await proxy.setVault("0xA61a6E696B7C566DA42B80dA27d96e7104bcec99");
 }
 
 // We recommend this pattern to be able to use async/await everywhere

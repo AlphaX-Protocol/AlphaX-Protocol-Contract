@@ -3,34 +3,57 @@
 //
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const { ethers, network } = require("hardhat");
+const { ethers, network, upgrades } = require("hardhat");
 const fs = require("fs");
 
 async function main() {
-  const [deployer] = await ethers.getSigners();
+  const [deployer, signer1, singer2] = await ethers.getSigners();
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  // console.log('Account balance:', (await deployer.getBalance()).toString());
+  // update!!! usdt  usdc?
+  let tokenAddress = "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2";
 
-  const token = await deployContract(
-    "SimpleTokenWithPermit",
-    ["USDC Test", "USDCTest", 6, 1000000000],
-    deployer
+  //  console.log('Account balance:', (await deployer.getBalance()).toString());
+
+  const vaultFactory = await ethers.getContractFactory("DEXVaultV2");
+
+  let proxy = await upgrades.deployProxy(
+    vaultFactory,
+    [
+      [
+        deployer.address,
+        '0xB99A2118f67C38eDB6516D9bdcB92Ef5d8fdC882',
+        '0xEec7073E5f1E60EfB76Fc02bC58C3aDdD5a679D2',
+      ],
+      tokenAddress, // test token
+      200000 * 1000000, //2WU
+      BigInt(10) * BigInt("1000000000000000000"), //10 ether
+    ],
+    { initializer: "initialize", kind: "uups" }
   );
 
-  console.log("Token address:", token.address);
+  await proxy.waitForDeployment();
+  console.log("Proxy contract", proxy.target);
 
-  let balance = await token.balanceOf(deployer.address);
-  console.log(`balance of deployer ${balance.toString()}`);
+  const receipt = await proxy.deployTransaction;
+  console.log(
+    " getImplementationAddress",
+    await upgrades.erc1967.getImplementationAddress(proxy.target)
+  );
 
   // verify contract
-  await verifyContract(token.address, network.name, [
-    "USDC Test",
-    "USDCTest",
-    6,
-    1000000000,
-  ]);
+  await verifyContract(proxy.target, network.name);
+
+  //===============2 test deposit
+
+  // const token = (await ethers.getContractFactory("SimpleToken")).attach(
+  //   tokenAddress,
+  // );
+
+  // await token.connect(deployer).approve(proxy.target, 100000000000);
+
+  // await proxy.connect(deployer).depositERC20(tokenAddress, 100000000);
 }
 
 async function deployContract(name, params, deployer = undefined) {

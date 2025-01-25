@@ -3,34 +3,37 @@
 //
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const { ethers, network } = require("hardhat");
+const { ethers, network, upgrades } = require("hardhat");
 const fs = require("fs");
 
 async function main() {
-  const [deployer] = await ethers.getSigners();
+  const [deployer, signer1, singer2] = await ethers.getSigners();
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  // console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  const token = await deployContract(
-    "SimpleTokenWithPermit",
-    ["USDC Test", "USDCTest", 6, 1000000000],
-    deployer
-  );
+  //  console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  console.log("Token address:", token.address);
+  const Vaultv3 = await ethers.getContractFactory("DEXVaultV2");
 
-  let balance = await token.balanceOf(deployer.address);
-  console.log(`balance of deployer ${balance.toString()}`);
+  let vaultAddress = "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99";
+  let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
+  let spotVaultAddress = "0x61c16f2864983338627c9B130D64023E12165B0f";
 
-  // verify contract
-  await verifyContract(token.address, network.name, [
-    "USDC Test",
-    "USDCTest",
-    6,
-    1000000000,
-  ]);
+  // let proxy = await upgrades.upgradeProxy(vaultAddress, vault3);
+   const vaultv3 = await Vaultv3.deploy();
+   await vaultv3.waitForDeployment();
+
+
+  
+  // await proxy.setSpotVault(spotVaultAddress);
+
+
+
+
+
+
+  
 }
 
 async function deployContract(name, params, deployer = undefined) {

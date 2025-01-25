@@ -10,8 +10,9 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import "./interfaces/IDEXSpotVault.sol";
 
-contract DEXVaultV1 is
+contract DEXVaultV2 is
     ReentrancyGuardUpgradeable,
     UUPSUpgradeable,
     OwnableUpgradeable,
@@ -30,7 +31,7 @@ contract DEXVaultV1 is
 
     event Withdraw(
         address indexed owner,
-        address  sender,
+        address sender,
         address indexed receiver,
         address indexed token,
         uint256 amount,
@@ -50,6 +51,21 @@ contract DEXVaultV1 is
     );
 
     event SignersUpdate(address[] oldSigners, address[] newSigners);
+
+    event TransferToSpotVault(
+        address indexed token,
+        uint256 amount,
+        uint256 requestId
+    );
+
+    event WithdrawSpot(
+        address indexed owner,
+        address sender,
+        address indexed receiver,
+        address indexed token,
+        uint256 amount,
+        uint256 requestId
+    );
 
     // Public fields
     address public USDT_ADDRESS; // USDT contract address
@@ -71,6 +87,9 @@ contract DEXVaultV1 is
 
     // Mapping of token addresses to last withdrawal timestamps
     mapping(address => uint256) public lastWithdrawalTimestamp;
+
+    // version 2 
+    address public spotVault;
 
     struct request {
         uint256 chainId; // The chain ID of the network the transaction was sent on
@@ -150,7 +169,6 @@ contract DEXVaultV1 is
         address receiver
     ) public payable whenNotPaused nonReentrant {
         require(msg.value > 0, "Deposit amount must be greater than zero");
-
         emit Deposit(msg.sender, receiver, address(0), msg.value);
     }
 
@@ -197,14 +215,7 @@ contract DEXVaultV1 is
         nonReentrant
         dailyLimitNotExceeded(address(0), amount)
     {
-        require(allSigners.length >= 2, "invalid allSigners length");
-        require(
-            allSigners.length == signatures.length,
-            "invalid signatures length"
-        );
-        require(allSigners[0] != allSigners[1], "can not be same signer"); // must be different signer
-        require(expireTime >= block.timestamp, "expired transaction");
-
+      
         require(
             amount <= tokenWithdrawLimit[address(0)],
             "exceed withdraw  eth limit"
@@ -223,11 +234,7 @@ contract DEXVaultV1 is
         );
         operationHash = MessageHashUtils.toEthSignedMessageHash(operationHash);
 
-        for (uint8 index = 0; index < allSigners.length; index++) {
-            address signer = ECDSA.recover(operationHash, signatures[index]);
-            require(signer == allSigners[index], "invalid signer");
-            require(isAllowedSigner(signer), "not allowed signer");
-        }
+        checkSignaturesAndExpireTime(operationHash,expireTime, allSigners, signatures);
 
         // Try to insert the request ID. Will revert if the request id was invalid
         tryInsertRequestId(block.chainid, requestId, to, amount, address(0));
@@ -246,7 +253,7 @@ contract DEXVaultV1 is
             "Address: unable to send value, recipient may have reverted"
         );
 
-        emit Withdraw( owner, msg.sender, to, address(0), amount, requestId);
+        emit Withdraw(owner, msg.sender, to, address(0), amount, requestId);
     }
 
     /**
@@ -275,14 +282,7 @@ contract DEXVaultV1 is
         nonReentrant
         dailyLimitNotExceeded(address(token), amount)
     {
-        require(allSigners.length >= 2, "invalid allSigners length");
-        require(
-            allSigners.length == signatures.length,
-            "invalid signatures length"
-        );
-        require(allSigners[0] != allSigners[1], "can not be same signer"); // must be different signer
-        require(expireTime >= block.timestamp, "expired transaction");
-
+     
         require(tokenWithdrawLimit[token] > 0, "Token not allowed");
 
         require(amount <= tokenWithdrawLimit[token], "exceed withdraw  limit");
@@ -301,11 +301,8 @@ contract DEXVaultV1 is
         );
         operationHash = MessageHashUtils.toEthSignedMessageHash(operationHash);
 
-        for (uint8 index = 0; index < allSigners.length; index++) {
-            address signer = ECDSA.recover(operationHash, signatures[index]);
-            require(signer == allSigners[index], "invalid signer");
-            require(isAllowedSigner(signer), "not allowed signer");
-        }
+        checkSignaturesAndExpireTime(operationHash,expireTime, allSigners, signatures);
+
 
         // Try to insert the request ID. Will revert if the request id was invalid
         tryInsertRequestId(block.chainid, requestId, to, amount, token);
@@ -553,4 +550,102 @@ contract DEXVaultV1 is
 
         emit Deposit(owner, owner, token, amount);
     }
+
+
+
+
+
+    // version 2 function -------------------------------------------
+
+     function withdrawERC20FromSpot( 
+        address owner,
+        address to,
+        uint256 amount,
+        address token,
+        uint256 expireTime,
+        uint256 requestId,
+        address[] memory allSigners,
+        bytes[] memory signatures)  public
+        whenNotPaused
+        nonReentrant {
+
+        checkWithdrawSignatures(owner, to , amount , token , expireTime, requestId, allSigners, signatures); 
+
+        ISpotVault(spotVault).withdrawERC20(owner, to, amount, token);
+
+        emit WithdrawSpot(owner, msg.sender, to, token, amount, requestId);    
+     }
+
+
+     function checkWithdrawSignatures(  
+        address owner,
+        address to,
+        uint256 amount,
+        address token,
+        uint256 expireTime,
+        uint256 requestId,
+        address[] memory allSigners,
+        bytes[] memory signatures) internal  {
+
+       
+        bytes32 operationHash = keccak256(
+            abi.encodePacked(
+                "ERC20",
+                block.chainid,
+                owner,
+                to,
+                amount,
+                token,
+                expireTime,
+                requestId,
+                address(this)
+            )
+        );
+        operationHash = MessageHashUtils.toEthSignedMessageHash(operationHash);
+
+        checkSignaturesAndExpireTime(operationHash, expireTime, allSigners, signatures);   
+        // Try to insert the request ID. Will revert if the request id was invalid
+        tryInsertRequestId(block.chainid, requestId, to, amount, token);
+
+     }
+
+
+
+
+     function checkSignaturesAndExpireTime(
+        bytes32 operationHash,
+        uint256 expireTime,
+        address[] memory allSigners,
+        bytes[] memory signatures) internal view {
+
+        require(allSigners.length >= 2, "invalid allSigners length");
+        require(
+            allSigners.length == signatures.length,
+            "invalid signatures length"
+        );
+        require(allSigners[0] != allSigners[1], "can not be same signer"); // must be different signer
+        require(expireTime >= block.timestamp, "expired transaction");
+
+       
+        for (uint8 index = 0; index < allSigners.length; index++) {
+            address signer = ECDSA.recover(operationHash, signatures[index]);
+            require(signer == allSigners[index], "invalid signer");
+            require(isAllowedSigner(signer), "not allowed signer");
+        }
+        
+     }
+    
+
+
+    /**
+     * Set the address of the spot vault
+     *
+     * @param _spotVault The address of the new spot vault
+     */
+    function setSpotVault(address _spotVault) external onlyOwner {
+        require(_spotVault != address(0), "Invalid spot vault address");
+        spotVault = _spotVault;
+    }
+ 
+
 }

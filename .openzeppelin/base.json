@@ -2,927 +2,40 @@
   "manifestVersion": "3.2",
   "proxies": [
     {
-      "address": "0x552E7A55802f3350C707a243E402aa50Eda9D286",
-      "txHash": "0x3b53c53a01b94faaafd5ad0dc46637c04d74271e44609d1ff81a86a24eeb6f97",
+      "address": "0x05E62AACA7E216c6245243D1AE945A0031f9bC49",
+      "txHash": "0x192a517d8b0c6b11d54890cc4d88b93d11be3aa2ed2884c8e7ecef6e05e1a94c",
+      "kind": "uups"
+    },
+    {
+      "address": "0x617401E8F8360b8bf0b6C849ea49e78DF4a4Ae2a",
+      "txHash": "0x7653feb9e29025cdc8fa438659c88132c293faaa1e8dfa45e136796173fbd756",
       "kind": "uups"
     },
     {
       "address": "0xf9ff7215cd3e44523f2498505EdB99c345Ad67c0",
-      "txHash": "0xa5fe4b0629f905388e07943f421e0c5d6819e3edf32b4aa738fff3f194e4c027",
+      "txHash": "0x297abc2d8cab2e31d5d856dc7cb4965627143e7d7616ffc6bf4fb1d8e324ff32",
       "kind": "uups"
     },
     {
-      "address": "0x69f2e06EE5dFfFEd2fFFf8956e5A3509D9E02C8b",
-      "txHash": "0xd5bdcf8d4911707a39026997eb60e8a684b98606f1880795abac9e06624261fe",
+      "address": "0xB5477E33aAC80206fc0621dd51A2bE7AD7b40613",
+      "txHash": "0x961012cafec06e1a9d1de401c1ffa020620d3241552d24318958709c432cf6c2",
       "kind": "uups"
     },
     {
-      "address": "0xFC1Abaf333377F3E3D51eD5e5Ff15ef477FE43fe",
-      "txHash": "0x24ba9735843ab56c8a522d56e1eb884419199908df58e0dc86fd41a3f07ff47d",
+      "address": "0x552E7A55802f3350C707a243E402aa50Eda9D286",
+      "txHash": "0x8c58b2b2068cc3a258f7ae515bbeda8040c88f48e82f8179619911bc51e276cf",
       "kind": "uups"
     },
     {
-      "address": "0xCcc1Fb4A7eFd8AfA275043a8Aa295a09309c0D80",
-      "txHash": "0x8026beca9e78304797b22fea491f68ab5e5d3b07375bbba085d0bb6649b8bdc5",
+      "address": "0x2b62F1c725Adc85479F0A2b383f42bE09b23686F",
+      "txHash": "0xf41e26926ba6c974454a5f112fbe7d39505f53bd2c61522938d2eec437cf0906",
       "kind": "uups"
     }
   ],
   "impls": {
-    "b58e969b0288cb90861d1b24156c8ee3b79fc0f0db009433073ba241d3048c73": {
-      "address": "0xc902C0E078aBb82D073c540326487f58591AA047",
-      "txHash": "0x0413d461e84f21b4928e9346817b7ccba5842f0920ec6d9d6dea741115247ebb",
-      "layout": {
-        "solcVersion": "0.8.24",
-        "storage": [
-          {
-            "label": "USDT_ADDRESS",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_address",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:48"
-          },
-          {
-            "label": "signers",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_address)dyn_storage",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:49"
-          },
-          {
-            "label": "requests",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(request)4002_storage)",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:52"
-          },
-          {
-            "label": "tokenWithdrawLimit",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:57"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_struct(InitializableStorage)65_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)14_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)193_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)257_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(request)4002_storage)": {
-            "label": "mapping(uint256 => struct DEXVault.request)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(request)4002_storage": {
-            "label": "struct DEXVault.request",
-            "members": [
-              {
-                "label": "chainId",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "to",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "amount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "token",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "executed",
-                "type": "t_bool",
-                "offset": 20,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
-    "8192cbbe013c21805e1f0250edad0bc245d5147cac566b7bdab95dd6dddf6a2e": {
-      "address": "0xA61a6E696B7C566DA42B80dA27d96e7104bcec99",
-      "txHash": "0x9ca4d30494d8993241a4f8699a76dce330f5ae785b13c5d0916c45f77caf4140",
-      "layout": {
-        "solcVersion": "0.8.24",
-        "storage": [
-          {
-            "label": "USDT_ADDRESS",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_address",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:48"
-          },
-          {
-            "label": "signers",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_address)dyn_storage",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:49"
-          },
-          {
-            "label": "requests",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(request)4002_storage)",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:52"
-          },
-          {
-            "label": "tokenWithdrawLimit",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:57"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_struct(InitializableStorage)65_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)14_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)193_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)257_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(request)4002_storage)": {
-            "label": "mapping(uint256 => struct DEXVault.request)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(request)4002_storage": {
-            "label": "struct DEXVault.request",
-            "members": [
-              {
-                "label": "chainId",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "to",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "amount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "token",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "executed",
-                "type": "t_bool",
-                "offset": 20,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
-    "4ef16e4d1c1c3a552a9ceb5c171e9eaeb5269ad40856250335bbc5f1883aad01": {
-      "address": "0xecFbED430A4fBeB0468FdB0C6957fac70eb86B35",
-      "txHash": "0x45f36dce8bd9a20b27c24ebbc1a6073b125affe831be73ca6998c7c08e2b8709",
-      "layout": {
-        "solcVersion": "0.8.24",
-        "storage": [
-          {
-            "label": "USDT_ADDRESS",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_address",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:55"
-          },
-          {
-            "label": "signers",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_address)dyn_storage",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:56"
-          },
-          {
-            "label": "requests",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(request)4024_storage)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:59"
-          },
-          {
-            "label": "tokenWithdrawLimit",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:64"
-          },
-          {
-            "label": "dailyWithdrawLimit",
-            "offset": 0,
-            "slot": "4",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:67"
-          },
-          {
-            "label": "dailyWithdrawals",
-            "offset": 0,
-            "slot": "5",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:70"
-          },
-          {
-            "label": "lastWithdrawalTimestamp",
-            "offset": 0,
-            "slot": "6",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:73"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_struct(InitializableStorage)65_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)14_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)193_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)257_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(request)4024_storage)": {
-            "label": "mapping(uint256 => struct DEXVaultV1.request)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(request)4024_storage": {
-            "label": "struct DEXVaultV1.request",
-            "members": [
-              {
-                "label": "chainId",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "to",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "amount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "token",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "executed",
-                "type": "t_bool",
-                "offset": 20,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
-    "9bde321ca713fc5ccd34631327bb3b917898d1d371b4db8e4a65080dedda2ee8": {
-      "address": "0x87FCDeC6a9e3133Ea2B0F3d73E5ee96A570F2081",
-      "txHash": "0x677524408347c0c4949affda84aa0f4053ab24ca60a607b29d98740ed5e3803e",
-      "layout": {
-        "solcVersion": "0.8.24",
-        "storage": [
-          {
-            "label": "USDT_ADDRESS",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_address",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:55"
-          },
-          {
-            "label": "signers",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_address)dyn_storage",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:56"
-          },
-          {
-            "label": "requests",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(request)4024_storage)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:59"
-          },
-          {
-            "label": "tokenWithdrawLimit",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:64"
-          },
-          {
-            "label": "dailyWithdrawLimit",
-            "offset": 0,
-            "slot": "4",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:67"
-          },
-          {
-            "label": "dailyWithdrawals",
-            "offset": 0,
-            "slot": "5",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:70"
-          },
-          {
-            "label": "lastWithdrawalTimestamp",
-            "offset": 0,
-            "slot": "6",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "DEXVaultV1",
-            "src": "contracts/upgrade/DEXVaultV1.sol:73"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_struct(InitializableStorage)65_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)14_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)193_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)257_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(request)4024_storage)": {
-            "label": "mapping(uint256 => struct DEXVaultV1.request)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(request)4024_storage": {
-            "label": "struct DEXVaultV1.request",
-            "members": [
-              {
-                "label": "chainId",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "to",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "amount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "token",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "executed",
-                "type": "t_bool",
-                "offset": 20,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
     "7bccc660fd23b1a10e0d216093d1e6e228a1ea803cf82e08242a05d1895f6b0d": {
-      "address": "0xf770b8C7aF606E9a923921F17821B58362C73F6F",
-      "txHash": "0x5e485137f25852456173a750930f4c556b11eb4637423849eacd63d7c99a1bfe",
+      "address": "0x604a4D7277088758D1284178d0dAC21B2E661344",
+      "txHash": "0x35c2829f7e8819eab33a05623696e83fa31520584eebe0b1542db5f6a392ee09",
       "layout": {
         "solcVersion": "0.8.24",
         "storage": [
@@ -932,7 +45,7 @@
             "slot": "0",
             "type": "t_address",
             "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:49"
+            "src": "contracts/1.0/DEXVault.sol:49"
           },
           {
             "label": "signers",
@@ -940,15 +53,15 @@
             "slot": "1",
             "type": "t_array(t_address)dyn_storage",
             "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:50"
+            "src": "contracts/1.0/DEXVault.sol:50"
           },
           {
             "label": "requests",
             "offset": 0,
             "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(request)5403_storage)",
+            "type": "t_mapping(t_uint256,t_struct(request)4077_storage)",
             "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:53"
+            "src": "contracts/1.0/DEXVault.sol:53"
           },
           {
             "label": "tokenWithdrawLimit",
@@ -956,7 +69,7 @@
             "slot": "3",
             "type": "t_mapping(t_address,t_uint256)",
             "contract": "DEXVault",
-            "src": "contracts/DEXVault.sol:58"
+            "src": "contracts/1.0/DEXVault.sol:58"
           }
         ],
         "types": {
@@ -1038,11 +151,11 @@
             "label": "mapping(address => uint256)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(request)5403_storage)": {
+          "t_mapping(t_uint256,t_struct(request)4077_storage)": {
             "label": "mapping(uint256 => struct DEXVault.request)",
             "numberOfBytes": "32"
           },
-          "t_struct(request)5403_storage": {
+          "t_struct(request)4077_storage": {
             "label": "struct DEXVault.request",
             "members": [
               {
@@ -1131,35 +244,35 @@
         }
       }
     },
-    "e295a7eb801ff5a681c90f1a1f40a416a64455a45fa38d3674e7cf2b439f55ac": {
-      "address": "0x223Ce0AB0795e86724d2eE174dB4Cb82dA21d0ef",
-      "txHash": "0xaccabfe78e0f7e5ad10571c7c06171ccbfd313aa0289c560eaa26bcda15f4c55",
+    "39e6f7d2c5163fa9d20718e7cabe681d448f8ee9aec042daee4f0ffdec4b3c6b": {
+      "address": "0xd77586726d7C0B8C431a0b412a5046ad2106BaF5",
+      "txHash": "0xfa6331146b4fcb2f516b8e6b313b280a3f1f8d12ef904914001ea49b1834f11d",
       "layout": {
         "solcVersion": "0.8.24",
         "storage": [
           {
-            "label": "USDT_ADDRESS",
+            "label": "AGGREGATION_ROUTER_ADDRESS",
             "offset": 0,
             "slot": "0",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:19"
-          },
-          {
-            "label": "AGGREGATION_ROUTER_ADDRESS",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:20"
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:24"
           },
           {
             "label": "VAULT_ADDRESS",
             "offset": 0,
-            "slot": "2",
+            "slot": "1",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:21"
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:25"
+          },
+          {
+            "label": "usedRequestIds",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_bytes32,t_bool)",
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:42"
           }
         ],
         "types": {
@@ -1195,6 +308,18 @@
               {
                 "label": "_owner",
                 "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)193_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
                 "offset": 0,
                 "slot": "0"
               }
@@ -1220,9 +345,27 @@
           "t_uint64": {
             "label": "uint64",
             "numberOfBytes": "8"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_bool)": {
+            "label": "mapping(bytes32 => bool)",
+            "numberOfBytes": "32"
           }
         },
         "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
           "erc7201:openzeppelin.storage.Ownable": [
             {
               "contract": "OwnableUpgradeable",
@@ -1264,9 +407,9 @@
         }
       }
     },
-    "cbaa593a8d58b372e0ded60aa96fd044a189c2d6a8691f08bac217d667d5e788": {
-      "address": "0x857CC734669F040CF9c436C11ADFBb130F16A4Ca",
-      "txHash": "0x16c4abcfab1d34bac51118303c2232e07853279666a1241fca3b20cbd6338ad0",
+    "da026623ab8d8389272a2fbd27fd85f75c4c57715608cdfd2cbba8c5867a0d76": {
+      "address": "0xf770b8C7aF606E9a923921F17821B58362C73F6F",
+      "txHash": "0x2ce88d658a197cd5c8d584a2f6edf9b6a6de28023531a2a38c1c3097d7400389",
       "layout": {
         "solcVersion": "0.8.24",
         "storage": [
@@ -1275,24 +418,64 @@
             "offset": 0,
             "slot": "0",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:19"
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:71"
           },
           {
-            "label": "AGGREGATION_ROUTER_ADDRESS",
+            "label": "signers",
             "offset": 0,
             "slot": "1",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:20"
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:72"
           },
           {
-            "label": "VAULT_ADDRESS",
+            "label": "requests",
             "offset": 0,
             "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(request)4049_storage)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:75"
+          },
+          {
+            "label": "tokenWithdrawLimit",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:80"
+          },
+          {
+            "label": "dailyWithdrawLimit",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:83"
+          },
+          {
+            "label": "dailyWithdrawals",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:86"
+          },
+          {
+            "label": "lastWithdrawalTimestamp",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:89"
+          },
+          {
+            "label": "spotVault",
+            "offset": 0,
+            "slot": "7",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:21"
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:92"
           }
         ],
         "types": {
@@ -1334,133 +517,12 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(ReentrancyGuardStorage)195_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+          "t_struct(PausableStorage)193_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
             "members": [
               {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
-    "0642a0439c4193b804efc0dbc8578ee8ba6de3d83897c8edb194117427a6edf3": {
-      "address": "0xE0C90e6bEc80B190795465f7C6449508705D4aFf",
-      "txHash": "0x7d2ff75419fda4c4d9841e3ce364a54eafe160744c0ab13ba2062475d1da2f49",
-      "layout": {
-        "solcVersion": "0.8.24",
-        "storage": [
-          {
-            "label": "USDT_ADDRESS",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:22"
-          },
-          {
-            "label": "AGGREGATION_ROUTER_ADDRESS",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:23"
-          },
-          {
-            "label": "VAULT_ADDRESS",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:24"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_struct(InitializableStorage)65_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
+                "label": "_paused",
                 "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)14_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
                 "offset": 0,
                 "slot": "0"
               }
@@ -1486,9 +548,67 @@
           "t_uint64": {
             "label": "uint64",
             "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(request)4049_storage)": {
+            "label": "mapping(uint256 => struct DEXVaultV2.request)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(request)4049_storage": {
+            "label": "struct DEXVaultV2.request",
+            "members": [
+              {
+                "label": "chainId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "to",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "executed",
+                "type": "t_bool",
+                "offset": 20,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
           }
         },
         "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
           "erc7201:openzeppelin.storage.Ownable": [
             {
               "contract": "OwnableUpgradeable",
@@ -1530,35 +650,35 @@
         }
       }
     },
-    "b1e3ffbe6e0489d63819675f222b78efebb446ed2b3cffd3dbacac5f0cca1f7f": {
-      "address": "0x2ba27F167119984F5a6BDC3a6dbc94E0FBC2283d",
-      "txHash": "0x4924b1f97181beeb81dcbaaace57dad21309392c4ce5e9b70ac86ce35cc3f1eb",
+    "7a1b0f18148a8e3a3f84a572d56342c3549ad9fa51735742c35f2a48189c2140": {
+      "address": "0x36EE9eBF8821E37f18E29047b8f4018b09f5E118",
+      "txHash": "0xdab90710c79c0154f21b0a0463d2abcb04d8063d27c77a583231a39a371e5e64",
       "layout": {
         "solcVersion": "0.8.24",
         "storage": [
           {
-            "label": "USDT_ADDRESS",
+            "label": "AGGREGATION_ROUTER_ADDRESS",
             "offset": 0,
             "slot": "0",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:22"
-          },
-          {
-            "label": "AGGREGATION_ROUTER_ADDRESS",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:23"
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:24"
           },
           {
             "label": "VAULT_ADDRESS",
             "offset": 0,
-            "slot": "2",
+            "slot": "1",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:24"
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:25"
+          },
+          {
+            "label": "usedRequestIds",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:43"
           }
         ],
         "types": {
@@ -1600,7 +720,19 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(ReentrancyGuardStorage)195_storage": {
+          "t_struct(PausableStorage)193_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)257_storage": {
             "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
             "members": [
               {
@@ -1619,9 +751,23 @@
           "t_uint64": {
             "label": "uint64",
             "numberOfBytes": "8"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
           }
         },
         "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
           "erc7201:openzeppelin.storage.Ownable": [
             {
               "contract": "OwnableUpgradeable",
@@ -1663,9 +809,9 @@
         }
       }
     },
-    "62187b25af7a6af588749101c1a84a179902fbd39542ff6d48a123dbfda2ab7c": {
-      "address": "0x61c16f2864983338627c9B130D64023E12165B0f",
-      "txHash": "0x39d5b0fd23d9b0bfa6ad81e0b81e3362eb2358370bd6dc513966c70d01f6dcff",
+    "ad415d8457eaae7f8f10e14456b8530453e1cce04eff096cda1cbac420c6d3b6": {
+      "address": "0xc902C0E078aBb82D073c540326487f58591AA047",
+      "txHash": "0x8884b8bf134dedb19649f8de529ebb14dc7969a6f45eb808c56c68e15c073110",
       "layout": {
         "solcVersion": "0.8.24",
         "storage": [
@@ -1674,24 +820,64 @@
             "offset": 0,
             "slot": "0",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:22"
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:71"
           },
           {
-            "label": "AGGREGATION_ROUTER_ADDRESS",
+            "label": "signers",
             "offset": 0,
             "slot": "1",
-            "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:23"
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:72"
           },
           {
-            "label": "VAULT_ADDRESS",
+            "label": "requests",
             "offset": 0,
             "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(request)4049_storage)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:75"
+          },
+          {
+            "label": "tokenWithdrawLimit",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:80"
+          },
+          {
+            "label": "dailyWithdrawLimit",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:83"
+          },
+          {
+            "label": "dailyWithdrawals",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:86"
+          },
+          {
+            "label": "lastWithdrawalTimestamp",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:89"
+          },
+          {
+            "label": "spotVault",
+            "offset": 0,
+            "slot": "7",
             "type": "t_address",
-            "contract": "DEXVaultRouter",
-            "src": "contracts/DEXVaultRouter.sol:24"
+            "contract": "DEXVaultV2",
+            "src": "contracts/DEXVaultV2.sol:92"
           }
         ],
         "types": {
@@ -1733,7 +919,19 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(ReentrancyGuardStorage)195_storage": {
+          "t_struct(PausableStorage)193_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)257_storage": {
             "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
             "members": [
               {
@@ -1752,9 +950,226 @@
           "t_uint64": {
             "label": "uint64",
             "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(request)4049_storage)": {
+            "label": "mapping(uint256 => struct DEXVaultV2.request)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(request)4049_storage": {
+            "label": "struct DEXVaultV2.request",
+            "members": [
+              {
+                "label": "chainId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "to",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "executed",
+                "type": "t_bool",
+                "offset": 20,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
           }
         },
         "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:40",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "f3eb16632a8e275c369d32d15a40532ec57e3310e56c3c467e965b041fe9db67": {
+      "address": "0x14D4F18efbD9a874B7fE5869597dAB05fEF0Ba63",
+      "txHash": "0x05194e9e0acfd49eddbcc1b1ec0fe4b862fbdb1e87528d4c68f94b1d0d565338",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "AGGREGATION_ROUTER_ADDRESS",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:24"
+          },
+          {
+            "label": "VAULT_ADDRESS",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:25"
+          },
+          {
+            "label": "usedRequestIds",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "DEXSpotVault",
+            "src": "contracts/DEXSpotVault.sol:43"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)65_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)14_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)193_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)257_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
           "erc7201:openzeppelin.storage.Ownable": [
             {
               "contract": "OwnableUpgradeable",

@@ -23,9 +23,22 @@ function mnemonic() {
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.24",
+  settings: {
+    optimizer: {
+      enabled: true,
+      runs: 200,
+    },
+  },
   networks: {
     localhost: {
       url: "http://localhost:8545",
+    },
+
+    hardhat: {
+      forking: {
+        url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID,
+        blockNumber: 20638640,
+      },
     },
 
     mainnet: {
@@ -56,6 +69,7 @@ module.exports = {
       sepolia: process.env.EHTERSCAN_KEY,
       optimisticEthereum: process.env.OP_KEY,
       arbitrumOne: process.env.ARBI_KEY,
+      base: process.env.BASE_KEY,
     },
   },
   sourcify: {
