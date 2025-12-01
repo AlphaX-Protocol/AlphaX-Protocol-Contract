@@ -89,6 +89,7 @@ contract DEXVault is
     ) public initializer {
         __Ownable_init(msg.sender);
         __UUPSUpgradeable_init();
+        __ReentrancyGuard_init();
         __Pausable_init();
 
         require(allowedSigners.length == 3, "invalid allSigners length");

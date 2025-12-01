@@ -60,6 +60,7 @@ contract DEXSpotVault is
     ) public initializer {
         __Ownable_init(_owner);
         __UUPSUpgradeable_init();
+        __ReentrancyGuard_init();
         __Pausable_init();
         AGGREGATION_ROUTER_ADDRESS = _aggregationRouterV6;
         VAULT_ADDRESS = _vaultAddress;

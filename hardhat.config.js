@@ -64,13 +64,13 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: {
-      mainnet: process.env.EHTERSCAN_KEY,
-      sepolia: process.env.EHTERSCAN_KEY,
-      optimisticEthereum: process.env.OP_KEY,
-      arbitrumOne: process.env.ARBI_KEY,
-      base: process.env.BASE_KEY,
-    },
+    // apiKey: {
+    //   mainnet: process.env.EHTERSCAN_KEY,
+    //   sepolia: process.env.EHTERSCAN_KEY,
+    //   optimisticEthereum: process.env.OP_KEY,
+    //   arbitrumOne: process.env.ARBI_KEY,
+    //   base: process.env.BASE_KEY,
+    // },
   },
   sourcify: {
     // Disabled by default
