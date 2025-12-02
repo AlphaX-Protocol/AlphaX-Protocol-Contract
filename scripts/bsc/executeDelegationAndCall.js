@@ -23,7 +23,7 @@ const main = async () => {
   //auth 
   const auth = await wallet.authorize({
     address: BATCH_CALL_DELEGATION_ADDRESS,
-    nonce: currentNonce,
+    nonce: currentNonce+1,
     chainId: '0x38', // 
   });
 
