@@ -16,15 +16,12 @@ const main = async () => {
   
   console.log(`Using BatchCallAndSponsorat: ${BATCH_CALL_DELEGATION_ADDRESS}`);
 
-  
-  
-
   const currentNonce = await ethers.provider.getTransactionCount(wallet.address);
 
   console.log('currentNonce:', currentNonce);
 
   const authorizationData = {
-    chainId: '0xa4b1',   //todo 
+    chainId: '0x38',   //todo 
     address: BATCH_CALL_DELEGATION_ADDRESS,
     nonce: ethers.toBeHex(currentNonce + 1),
   }
@@ -59,7 +56,7 @@ const main = async () => {
     ethers.toBeHex(currentNonce),
     ethers.toBeHex(feeData.maxPriorityFeePerGas+ BigInt(1000000000)), // Priority fee (tip)
     ethers.toBeHex(feeData.maxFeePerGas* BigInt(2)), // Maximum total fee willing to pay
-    ethers.toBeHex(1000000), // Gas limit
+    ethers.toBeHex(10000000), // Gas limit
     wallet.address, // Sender address
     '0x', // Value (in addition to batch transfers)
     '0x00', // Encoded function call  calldata

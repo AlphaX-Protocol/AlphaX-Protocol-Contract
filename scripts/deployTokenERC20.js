@@ -34,7 +34,18 @@ async function main() {
 }
 
 async function deployContract(name, params, deployer = undefined) {
-  const contract = await hre.ethers.deployContract(name, params, deployer);
+  // Set a higher gas limit for contract deployment
+  // Default to 5M gas, which should be sufficient for most contracts
+  const deployOptions = {
+    gasLimit: 5000000,
+  };
+  
+  // If deployer is provided, add it as signer
+  if (deployer) {
+    deployOptions.signer = deployer;
+  }
+  
+  const contract = await hre.ethers.deployContract(name, params, deployOptions);
   await contract.waitForDeployment();
 
   contract.address = contract.target;

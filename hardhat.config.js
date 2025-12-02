@@ -58,20 +58,25 @@ module.exports = {
       url: "https://arb1.arbitrum.io/rpc",
       accounts: mnemonic(),
     },
-    base: {
-      // this is a custom network
-      url: "https://mainnet.base.org/",
-      accounts: mnemonic(),
-    },
+      base: {
+        // this is a custom network
+        url: "https://mainnet.base.org/",
+        accounts: mnemonic(),
+      },
+      bsc: {
+        url: "https://binance.llamarpc.com/",
+        accounts: mnemonic(),
+      },
   },
   etherscan: {
-    // apiKey: {
+     apiKey: {
     //   mainnet: process.env.EHTERSCAN_KEY,
     //   sepolia: process.env.EHTERSCAN_KEY,
     //   optimisticEthereum: process.env.OP_KEY,
     //   arbitrumOne: process.env.ARBI_KEY,
     //   base: process.env.BASE_KEY,
-    // },
+         bsc: process.env.BSC_KEY,
+     },
   },
   sourcify: {
     // Disabled by default

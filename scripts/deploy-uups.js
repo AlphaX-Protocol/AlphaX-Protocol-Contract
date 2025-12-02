@@ -7,26 +7,37 @@ const { ethers, network, upgrades } = require("hardhat");
 const fs = require("fs");
 
 async function main() {
-  const [deployer, signer1, singer2] = await ethers.getSigners();
+  // const [deployer, signer1, singer2] = await ethers.getSigners();
+
+  const deployer = new ethers.Wallet(process.env.PRIVATE_KEY, ethers.provider);
+  const signer1 = new ethers.Wallet(process.env.PRIVATE_KEY1, ethers.provider);
+  const signer2 = new ethers.Wallet(process.env.PRIVATE_KEY2, ethers.provider);
 
   console.log("Deploying contracts with the account:", deployer.address);
 
   // update!!!
-  let tokenAddress = "0x0668f9B182a5977781d73cD416eF985145B9Cd80";
+  let tokenAddress = "0x604a4d7277088758d1284178d0dac21b2e661344";
 
   //  console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  const vaultFactory = await ethers.getContractFactory("DEXVault");
+  const vaultFactory = await ethers.getContractFactory("DEXVaultV1");
 
   let proxy = await upgrades.deployProxy(
     vaultFactory,
     [
-      [deployer.address, signer1.address, singer2.address],
+      [deployer.address, signer1.address, signer2.address],
       tokenAddress, // test token
       20000 * 1000000, //2WU
       BigInt(10) * BigInt("1000000000000000000"), //10 ether
     ],
-    { initializer: "initialize", kind: "uups" },
+    { 
+      initializer: "initialize", 
+      kind: "uups",
+      // Transaction overrides - gas limit for deployment
+      txOverrides: {
+        gasLimit: 50000000, // 5M gas should be sufficient for proxy deployment BSC
+      },
+    },
   );
 
   await proxy.waitForDeployment();
@@ -53,7 +64,17 @@ async function main() {
 }
 
 async function deployContract(name, params, deployer = undefined) {
-  const contract = await hre.ethers.deployContract(name, params, deployer);
+
+  const deployOptions = {
+    gasLimit: 5000000,
+  };
+  
+  // If deployer is provided, add it as signer
+  if (deployer) {
+    deployOptions.signer = deployer;
+  }
+
+  const contract = await hre.ethers.deployContract(name, params, deployOptions);
   await contract.waitForDeployment();
 
   contract.address = contract.target;

@@ -14,7 +14,10 @@ const main = async () => {
   
   // Deploy BatchCallDelegation contract
   console.log("Deploying BatchCallDelegation contract...");
-  const batchCallDelegation = await BatchCallDelegation.deploy();
+  
+  const batchCallDelegation = await BatchCallDelegation.deploy({
+    gasLimit: 5000000, // 5M gas should be sufficient for contract deployment
+  });
   
   // Wait until the contract is fully deployed on the blockchain
   await batchCallDelegation.waitForDeployment();
