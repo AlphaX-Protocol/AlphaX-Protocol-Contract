@@ -19,8 +19,11 @@ import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
  *
  * Replay protection is achieved by using a nonce that is included in the signed message.
  */
-contract BatchCallAndSponsor {
+contract BatchCallAndSponsorV1 {
     using ECDSA for bytes32;
+
+     // keccak256("EIP712Domain(uint256 chainId,address verifyingContract)");
+    bytes32 private constant _DOMAIN_TYPEHASH = 0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218;
 
     /// @notice A nonce used for replay protection.
     uint256 public nonce;
@@ -51,8 +54,12 @@ contract BatchCallAndSponsor {
         for (uint256 i = 0; i < calls.length; i++) {
             encodedCalls = abi.encodePacked(encodedCalls, calls[i].to, calls[i].value, calls[i].data);
         }
-        bytes32 digest = keccak256(abi.encodePacked(nonce, encodedCalls));
+        bytes32 structHash = keccak256(abi.encodePacked(nonce, encodedCalls));
         
+        bytes32 domainSeparator = keccak256(abi.encodePacked(_DOMAIN_TYPEHASH, block.chainid, address(this)));
+
+        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+
         bytes32 ethSignedMessageHash = MessageHashUtils.toEthSignedMessageHash(digest);
 
         // Recover the signer from the provided signature.

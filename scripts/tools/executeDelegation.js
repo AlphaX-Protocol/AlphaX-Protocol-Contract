@@ -6,7 +6,7 @@ const main = async () => {
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, ethers.provider);
 
   // Read deployment info from JSON file
-  const deploymentPath = path.join(__dirname, '../deployments', `${network.name}.json`);
+  const deploymentPath = path.join(__dirname, '../../deployments', `${network.name}.json`);
   if (!fs.existsSync(deploymentPath)) {
     throw new Error(`Deployment file not found for network: ${network.name}`);
   }
@@ -56,7 +56,7 @@ const main = async () => {
     ethers.toBeHex(currentNonce),
     ethers.toBeHex(feeData.maxPriorityFeePerGas+ BigInt(1000000000)), // Priority fee (tip)
     ethers.toBeHex(feeData.maxFeePerGas* BigInt(2)), // Maximum total fee willing to pay
-    ethers.toBeHex(10000000), // Gas limit
+    ethers.toBeHex(20000000), // Gas limit
     wallet.address, // Sender address
     '0x', // Value (in addition to batch transfers)
     '0x00', // Encoded function call  calldata

@@ -2,6 +2,11 @@ const { ethers } = require('hardhat');
 const fs = require('fs');
 const path = require('path');
 
+
+function hexStringToBuffer(hexstr) {
+  return Buffer.from(hexstr.replace(/^0x/, ''), 'hex');
+}
+
 const main = async () => {
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, ethers.provider);
 
@@ -27,7 +32,7 @@ const main = async () => {
     chainId: '0x38', // 
   });
 
-  console.log("Authorization created with nonce:", auth.signature);
+  //console.log("Authorization created with nonce:", auth.signature);
 
   // call 
   const alice = new ethers.Wallet(process.env.PRIVATE_KEY_ALICE, ethers.provider);
@@ -72,15 +77,37 @@ const main = async () => {
     alice
   );
 
-  const nonce = await delegatedContract.nonce();
-  //const nonce = 0;  first time
+ // const nonce = await delegatedContract.nonce();
+  const nonce = 0;  //first time
   console.log('contractNonce:', nonce);
   // const signature = await wallet.signMessage(ethers.getBytes());
 
 
+     const domainTypehash = '0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218';
+
   const digest = ethers.keccak256(
-    ethers.solidityPacked(["uint256", "bytes"], [BigInt(nonce), encodedCallBytes])
+    ethers.solidityPacked(["bytes32","uint256","address","uint256", "bytes"], [domainTypehash, 0x38, wallet.address, BigInt(nonce), encodedCallBytes])
   );
+
+
+
+  //const domainTypehash = ethers.keccak256(ethers.getBytes("EIP712Domain(uint256 chainId,address verifyingContract)"));
+//0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218
+ // console.log('domainTypehash:', domainTypehash);
+
+  // const domainSeparator = ethers.keccak256(
+  //   ethers.solidityPacked(["bytes32","uint256", "address"], [domainTypehash, 0x38, BATCH_CALL_DELEGATION_ADDRESS])
+  // );
+
+  // const digest = ethers.keccak256(
+  //   Buffer.concat(['0x1901',domainSeparator, structhash])
+  // );
+
+  //const digest  = ethers.keccak256(Buffer.concat(['0x1901', domainSeparator, structhash].map(str => hexStringToBuffer(str))));
+
+  // const digest = ethers.keccak256(
+  //   ethers.solidityPacked(["uint256","bytes32", "bytes32"], [0x1901, domainSeparator, structhash])
+  // );
 
   console.log('Digest:', digest);
 
@@ -96,7 +123,12 @@ const main = async () => {
 
   const tx = await delegatedContract[
     "execute((address,uint256,bytes)[] calls, bytes signature) external payable"
-  ](calls, signature, );
+  ](calls, signature, 
+    { 
+      type: 4,
+      authorizationList: [auth],
+    }
+  );
   
   
   console.log("Sponsored transaction sent:", tx.hash);

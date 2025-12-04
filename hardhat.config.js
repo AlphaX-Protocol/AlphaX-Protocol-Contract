@@ -35,12 +35,15 @@ module.exports = {
       timeout: 60000,
     },
 
-    hardhat: {
-      forking: {
-        url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID,
-        blockNumber: 20638640,
-      },
-    },
+    // hardhat: {
+    //   // forking: {
+    //   //   url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID,
+    //   //   blockNumber: 20638640,
+    //   // },
+    //   // Configure gas prices for testing
+    //   // gasPrice: 20000000000, // 20 gwei
+    //   // initialBaseFeePerGas: 1000000000, // 1 gwei
+    // },
 
     mainnet: {
       url: "https://mainnet.infura.io/v3/" + process.env.INFURA_ID, //<---- YOUR INFURA ID! (or it won't work)
