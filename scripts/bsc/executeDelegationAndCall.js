@@ -21,6 +21,11 @@ const main = async () => {
 
   console.log(`Using BatchCallAndSponsorat: ${BATCH_CALL_DELEGATION_ADDRESS}`);
 
+
+  const tokenAddress = "0x604a4d7277088758d1284178d0dac21b2e661344";
+  const vaultAddress = "0x536f8aaD0E74C5f64618665F4c93c82ec51dF1E0";
+  const amount = 1000 * 10 ** 6; //1000 USDC
+
   const currentNonce = await ethers.provider.getTransactionCount(wallet.address);
 
   console.log('currentNonce:', currentNonce);
@@ -44,17 +49,31 @@ const main = async () => {
     "function nonce() external view returns (uint256)"
   ];
 
+  const erc20ABI = [
+    "function transfer(address to, uint256 amount) external returns (bool)",
+    "function approve(address spender, uint256 amount) external returns (bool)",
+  ];
+
+  const vaultABI = [
+    "function depositERC20(address token, uint256 amount, address receiver) external",
+  ];
+
+
+  const erc20Interface = new ethers.Interface(erc20ABI);
+  const vaultInterface = new ethers.Interface(vaultABI);
+
   // Define sample transaction parameters for batch execution
   const calls = [
     [
-      "0x604a4d7277088758d1284178d0dac21b2e661344",
+      tokenAddress,
       0,
-      "0x095ea7b3000000000000000000000000536f8aaD0E74C5f64618665F4c93c82ec51dF1E0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      //"0x095ea7b3000000000000000000000000536f8aaD0E74C5f64618665F4c93c82ec51dF1E0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      erc20Interface.encodeFunctionData("approve", [vaultAddress, amount]),
     ],
     [
-      "0x536f8aaD0E74C5f64618665F4c93c82ec51dF1E0",
+      vaultAddress,
       0,
-      "0x1828686a000000000000000000000000604a4d7277088758d1284178d0dac21b2e6613440000000000000000000000000000000000000000000000000000000000989680000000000000000000000000F62F93f8D0396Cf859599dc85960bed119DdF7AB",
+      vaultInterface.encodeFunctionData("depositERC20", [tokenAddress, amount, wallet.address]),
     ]
   ];
 
@@ -88,18 +107,14 @@ const main = async () => {
 
   const domainTypehash = '0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218';
 
- 
-
   //const domainTypehash = ethers.keccak256(ethers.getBytes("EIP712Domain(uint256 chainId,address verifyingContract)"));
-//0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218
- // console.log('domainTypehash:', domainTypehash);
 
   const domainSeparator = ethers.keccak256(
-    ethers.solidityPacked(["bytes32","uint256", "address"], [domainTypehash, 0x38, wallet.address])
+    ethers.solidityPacked(["bytes32", "uint256", "address"], [domainTypehash, 0x38, wallet.address])
   );
 
 
-  const digest  = ethers.keccak256(Buffer.concat(['0x1901', domainSeparator, structHash].map(str => hexStringToBuffer(str))));
+  const digest = ethers.keccak256(Buffer.concat(['0x1901', domainSeparator, structHash].map(str => hexStringToBuffer(str))));
 
 
   console.log('Digest:', digest);
@@ -116,15 +131,15 @@ const main = async () => {
 
   const tx = await delegatedContract[
     "execute((address,uint256,bytes)[] calls, bytes signature) external payable"
-  ](calls, signature, 
+  ](calls, signature,
     // { 
     //   type: 4,
     //   authorizationList: [auth],
     //   gasLimit: 10000000,
     // }
   );
-  
-  
+
+
   console.log("Sponsored transaction sent:", tx.hash);
 
   const receipt = await tx.wait();

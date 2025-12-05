@@ -21,9 +21,20 @@ const main = async () => {
 
   console.log(`Using BatchCallAndSponsorat: ${BATCH_CALL_DELEGATION_ADDRESS}`);
 
+// BSC
+  // const tokenAddress = "0x604a4d7277088758d1284178d0dac21b2e661344";
+  // const vaultAddress = "0x536f8aaD0E74C5f64618665F4c93c82ec51dF1E0";
+  // const chainId = '0x38';
+  //BATCH_CALL_DELEGATION_ADDRESS
 
-  const tokenAddress = "0x604a4d7277088758d1284178d0dac21b2e661344";
-  const vaultAddress = "0x536f8aaD0E74C5f64618665F4c93c82ec51dF1E0";
+// arbi 
+const tokenAddress = "0x6B079944C0E9bb9664077C1C327FcDdDD1D9aF82";
+const vaultAddress = "0xf9ff7215cd3e44523f2498505EdB99c345Ad67c0";
+const chainId = '0xa4b1';
+
+//sepolia
+
+
   const amount = 1000 * 10 ** 6; //1000 USDC
 
   const currentNonce = await ethers.provider.getTransactionCount(wallet.address);
@@ -34,7 +45,7 @@ const main = async () => {
   const auth = await wallet.authorize({
     address: BATCH_CALL_DELEGATION_ADDRESS,
     nonce: currentNonce,
-    chainId: '0x38', // 
+    chainId: chainId, // 
   });
 
   console.log("Authorization created with nonce:", auth);
@@ -67,7 +78,6 @@ const main = async () => {
     [
       tokenAddress,
       0,
-      //"0x095ea7b3000000000000000000000000536f8aaD0E74C5f64618665F4c93c82ec51dF1E0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
       erc20Interface.encodeFunctionData("approve", [vaultAddress, amount]),
     ],
     [
@@ -97,7 +107,7 @@ const main = async () => {
   );
 
   const nonce = await delegatedContract.nonce();
-  //const nonce = 0;  //first time
+  //const nonce = 0;  //first time 
   console.log('contractNonce:', nonce);
   // const signature = await wallet.signMessage(ethers.getBytes());
 
@@ -110,14 +120,14 @@ const main = async () => {
   //const domainTypehash = ethers.keccak256(ethers.getBytes("EIP712Domain(uint256 chainId,address verifyingContract)"));
 
   const domainSeparator = ethers.keccak256(
-    ethers.solidityPacked(["bytes32", "uint256", "address"], [domainTypehash, 0x38, wallet.address])
+    ethers.solidityPacked(["bytes32", "uint256", "address"], [domainTypehash, chainId, wallet.address])
   );
 
 
   const digest = ethers.keccak256(Buffer.concat(['0x1901', domainSeparator, structHash].map(str => hexStringToBuffer(str))));
 
 
-  console.log('Digest:', digest);
+  //console.log('Digest:', digest);
 
   // 4. Alice signs the digest off-chain using her private key
   // const signature = await wallet.signingKey.sign({
