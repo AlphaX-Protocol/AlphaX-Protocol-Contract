@@ -28,11 +28,15 @@ const main = async () => {
   //BATCH_CALL_DELEGATION_ADDRESS
 
 // arbi 
-const tokenAddress = "0x6B079944C0E9bb9664077C1C327FcDdDD1D9aF82";
-const vaultAddress = "0xf9ff7215cd3e44523f2498505EdB99c345Ad67c0";
-const chainId = '0xa4b1';
+// const tokenAddress = "0x6B079944C0E9bb9664077C1C327FcDdDD1D9aF82";
+// const vaultAddress = "0xf9ff7215cd3e44523f2498505EdB99c345Ad67c0";
+// const chainId = '0xa4b1';
 
 //sepolia
+const tokenAddress = "0x8868653d673c316255bef6d18fb463fea60ae1ea";
+const vaultAddress = "0x640A691bB8422C6e0252C9d4b3f6f09Df217434D";
+const chainId = '0xaa36a7';
+
 
 
   const amount = 1000 * 10 ** 6; //1000 USDC
@@ -142,11 +146,11 @@ const chainId = '0xa4b1';
   const tx = await delegatedContract[
     "execute((address,uint256,bytes)[] calls, bytes signature) external payable"
   ](calls, signature,
-    // { 
-    //   type: 4,
-    //   authorizationList: [auth],
-    //   gasLimit: 10000000,
-    // }
+    { 
+      type: 4,
+      authorizationList: [auth],
+      gasLimit: 10000000,
+    }
   );
 
 
