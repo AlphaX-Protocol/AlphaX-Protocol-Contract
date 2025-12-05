@@ -2,6 +2,11 @@ const { ethers } = require('hardhat');
 const fs = require('fs');
 const path = require('path');
 
+
+function hexStringToBuffer(hexstr) {
+  return Buffer.from(hexstr.replace(/^0x/, ''), 'hex');
+}
+
 const main = async () => {
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, ethers.provider);
 
@@ -23,11 +28,11 @@ const main = async () => {
   //auth 
   const auth = await wallet.authorize({
     address: BATCH_CALL_DELEGATION_ADDRESS,
-    nonce: currentNonce+1,
+    nonce: currentNonce,
     chainId: '0x38', // 
   });
 
-  console.log("Authorization created with nonce:", auth.signature);
+  console.log("Authorization created with nonce:", auth);
 
   // call 
   const alice = new ethers.Wallet(process.env.PRIVATE_KEY_ALICE, ethers.provider);
@@ -64,7 +69,7 @@ const main = async () => {
     ]
   );
 
-  console.log('encodedCallBytes:', encodedCallBytes);
+  //console.log('encodedCallBytes:', encodedCallBytes);
 
   const delegatedContract = new ethers.Contract(
     wallet.address,
@@ -73,14 +78,29 @@ const main = async () => {
   );
 
   const nonce = await delegatedContract.nonce();
-  //const nonce = 0;  first time
+  //const nonce = 0;  //first time
   console.log('contractNonce:', nonce);
   // const signature = await wallet.signMessage(ethers.getBytes());
 
-
-  const digest = ethers.keccak256(
+  const structHash = ethers.keccak256(
     ethers.solidityPacked(["uint256", "bytes"], [BigInt(nonce), encodedCallBytes])
   );
+
+  const domainTypehash = '0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218';
+
+ 
+
+  //const domainTypehash = ethers.keccak256(ethers.getBytes("EIP712Domain(uint256 chainId,address verifyingContract)"));
+//0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218
+ // console.log('domainTypehash:', domainTypehash);
+
+  const domainSeparator = ethers.keccak256(
+    ethers.solidityPacked(["bytes32","uint256", "address"], [domainTypehash, 0x38, wallet.address])
+  );
+
+
+  const digest  = ethers.keccak256(Buffer.concat(['0x1901', domainSeparator, structHash].map(str => hexStringToBuffer(str))));
+
 
   console.log('Digest:', digest);
 
@@ -91,12 +111,18 @@ const main = async () => {
   //   to: "hex",
   // });
   const signature = await wallet.signMessage(ethers.getBytes(digest));
-  console.log('Signature:', signature);
+  //console.log('Signature:', signature);
 
 
   const tx = await delegatedContract[
     "execute((address,uint256,bytes)[] calls, bytes signature) external payable"
-  ](calls, signature, );
+  ](calls, signature, 
+    // { 
+    //   type: 4,
+    //   authorizationList: [auth],
+    //   gasLimit: 10000000,
+    // }
+  );
   
   
   console.log("Sponsored transaction sent:", tx.hash);
