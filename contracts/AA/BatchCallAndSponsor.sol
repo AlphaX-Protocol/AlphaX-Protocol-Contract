@@ -19,7 +19,7 @@ import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
  *
  * Replay protection is achieved by using a nonce that is included in the signed message.
  */
-contract BatchCallAndSponsor {
+contract BatchCallAndSponsorV1 {
     using ECDSA for bytes32;
 
      // keccak256("EIP712Domain(uint256 chainId,address verifyingContract)");
