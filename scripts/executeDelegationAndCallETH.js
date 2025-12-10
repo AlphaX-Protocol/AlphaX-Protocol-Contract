@@ -22,9 +22,9 @@ const main = async () => {
   console.log(`Using BatchCallAndSponsorat: ${BATCH_CALL_DELEGATION_ADDRESS}`);
 
 // BSC
-  // const tokenAddress = "0x604a4d7277088758d1284178d0dac21b2e661344";
-  // const vaultAddress = "0x536f8aaD0E74C5f64618665F4c93c82ec51dF1E0";
-  // const chainId = '0x38';
+  const tokenAddress = "0x604a4d7277088758d1284178d0dac21b2e661344";
+  const vaultAddress = "0x536f8aaD0E74C5f64618665F4c93c82ec51dF1E0";
+  const chainId = '0x38';
   //BATCH_CALL_DELEGATION_ADDRESS
 
 // arbi 
@@ -33,9 +33,9 @@ const main = async () => {
 // const chainId = '0xa4b1';
 
 //sepolia
-const tokenAddress = "0x8868653d673c316255bef6d18fb463fea60ae1ea";
-const vaultAddress = "0x640A691bB8422C6e0252C9d4b3f6f09Df217434D";
-const chainId = '0xaa36a7';
+// const tokenAddress = "0x8868653d673c316255bef6d18fb463fea60ae1ea";
+// const vaultAddress = "0x640A691bB8422C6e0252C9d4b3f6f09Df217434D";
+// const chainId = '0xaa36a7';
 
 
 

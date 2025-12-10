@@ -67,7 +67,8 @@ module.exports = {
         accounts: mnemonic(),
       },
       bsc: {
-        url: "https://binance.llamarpc.com/",
+       // url: "https://binance.llamarpc.com/",
+        url: "https://bsc.api.pocket.network",
         accounts: mnemonic(),
       },
   },
