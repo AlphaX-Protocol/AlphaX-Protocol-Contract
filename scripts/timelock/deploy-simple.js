@@ -24,7 +24,7 @@ async function main() {
 
   const delayDays = process.env.TIMELOCK_DELAY_DAYS
     ? parseInt(process.env.TIMELOCK_DELAY_DAYS)
-    : 5;
+    : 10;
   const minDelay = delayDays * 60;
 
   const proposers = process.env.TIMELOCK_PROPOSERS
@@ -56,7 +56,7 @@ async function main() {
   console.log("TimelockController:", timelock.target);
 
   // Transfer ownership
-  // console.log("\n[2/2] Transferring vault ownership to TimelockController...");
+   console.log("\n[2/2] Transferring vault ownership to TimelockController...");
   // const vault = await ethers.getContractAt("DEXVaultV1", VAULT_ADDRESS);
   // const currentOwner = await vault.owner();
   // if (currentOwner.toLowerCase() !== deployer.address.toLowerCase()) {
