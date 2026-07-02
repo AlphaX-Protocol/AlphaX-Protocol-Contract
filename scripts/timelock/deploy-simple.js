@@ -18,13 +18,14 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deployer:", deployer.address);
 
-  const VAULT_ADDRESS = process.env.VAULT_ADDRESS;
-  if (!VAULT_ADDRESS) throw new Error("VAULT_ADDRESS must be set");
+  //const VAULT_ADDRESS = process.env.VAULT_ADDRESS;
+  // const VAULT_ADDRESS = '0x640A691bB8422C6e0252C9d4b3f6f09Df217434D'; //sepolia
+  // if (!VAULT_ADDRESS) throw new Error("VAULT_ADDRESS must be set");
 
   const delayDays = process.env.TIMELOCK_DELAY_DAYS
     ? parseInt(process.env.TIMELOCK_DELAY_DAYS)
-    : 2;
-  const minDelay = delayDays * 24 * 60 * 60;
+    : 5;
+  const minDelay = delayDays * 60;
 
   const proposers = process.env.TIMELOCK_PROPOSERS
     ? process.env.TIMELOCK_PROPOSERS.split(",").map((a) => a.trim())
@@ -32,11 +33,11 @@ async function main() {
 
   const executors = process.env.TIMELOCK_EXECUTORS
     ? process.env.TIMELOCK_EXECUTORS.split(",").map((a) => a.trim())
-    : [ethers.ZeroAddress];
+    : [deployer.address];
 
   console.log("\n--- Config ---");
-  console.log("Vault:", VAULT_ADDRESS);
-  console.log("Min delay:", `${delayDays} days (${minDelay}s)`);
+ 
+  console.log("Min delay:", `${delayDays} min (${minDelay}s)`);
   console.log("Proposers:", proposers);
   console.log("Executors:", executors);
 
@@ -55,21 +56,20 @@ async function main() {
   console.log("TimelockController:", timelock.target);
 
   // Transfer ownership
-  console.log("\n[2/2] Transferring vault ownership to TimelockController...");
-  const vault = await ethers.getContractAt("DEXVaultV1", VAULT_ADDRESS);
-  const currentOwner = await vault.owner();
-  if (currentOwner.toLowerCase() !== deployer.address.toLowerCase()) {
-    throw new Error(`Deployer is not vault owner (owner: ${currentOwner})`);
-  }
-  const tx = await vault.transferOwnership(timelock.target);
-  await tx.wait();
-  console.log("Vault owner now:", await vault.owner());
+  // console.log("\n[2/2] Transferring vault ownership to TimelockController...");
+  // const vault = await ethers.getContractAt("DEXVaultV1", VAULT_ADDRESS);
+  // const currentOwner = await vault.owner();
+  // if (currentOwner.toLowerCase() !== deployer.address.toLowerCase()) {
+  //   throw new Error(`Deployer is not vault owner (owner: ${currentOwner})`);
+  // }
+  // const tx = await vault.transferOwnership(timelock.target);
+  // await tx.wait();
+  // console.log("Vault owner now:", await vault.owner());
 
   console.log("\n═══════════════════════════════════════════");
   console.log("  DONE");
   console.log("═══════════════════════════════════════════");
   console.log("TimelockController:", timelock.target);
-  console.log("Vault:             ", VAULT_ADDRESS);
   console.log("═══════════════════════════════════════════");
   console.log("\nNext: after verification, renounce deployer admin role:");
   console.log(`  const ADMIN = await timelock.DEFAULT_ADMIN_ROLE()`);

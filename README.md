@@ -115,3 +115,19 @@ set spot vault address first:
  4. set spot vault address in origin vault ;
 
 
+### timelock
+
+1. npx hardhat run scripts/timelock/deploy-simple.js --network arbitrum
+
+```
+TIMELOCK_ADDRESS=0x63b8A01Dd45815F43f757556a2796E09913C4bB2
+VAULT_ADDRESS=0xf9ff7215cd3e44523f2498505edb99c345ad67c0
+TOKEN=0x6B079944C0E9bb9664077C1C327FcDdDD1D9aF82
+LIMIT=8000000000
+```
+
+2. npx hardhat run scripts/timelock/simple-schedule.js --network arbitrum   
+
+3. npx hardhat run scripts/timelock/simple-execute.js --network arbitrum
+
+

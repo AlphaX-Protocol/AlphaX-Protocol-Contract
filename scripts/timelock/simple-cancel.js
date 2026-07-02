@@ -17,7 +17,7 @@ require("dotenv").config();
 
 const TIMELOCK_ADDRESS = process.env.TIMELOCK_ADDRESS;
 const VAULT_ADDRESS = process.env.VAULT_ADDRESS;
-const OP = process.env.OP;
+const OP = 'setWithdrawLimit';
 const OPERATION_ID = process.env.OPERATION_ID;
 
 async function main() {
